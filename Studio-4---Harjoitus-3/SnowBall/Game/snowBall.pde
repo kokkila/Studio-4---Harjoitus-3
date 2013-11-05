@@ -1,4 +1,5 @@
 class SnowBall {
+  boolean moving;
   int x;
   int y;
   int Dx;
@@ -12,17 +13,19 @@ class SnowBall {
     this.x = startX;
     this.y = startY;
     this.size = size;
-    this.speed = speed;
-    Dy = 0;
-    Dx = 0;
+    this.xySpeed = speed;
+    this.sizeSpeed = 0.0005;
+    Dy = -1;
+    Dx = 1;
+    Dsize = 1;
   }
 
-  void chanceLoc(float timePassed) {
+  void chanceLoc(int timePassed) {
     if (this.Dx == 0 || this.Dy== 0) {
       println("ERROR: SnowBall Dx or Dy is 0!!");
     }
-    this.x = this.x + this.Dx*(Math.round(timePassed*this.xyspeed));
-    this.y = this.y + this.Dy*(Math.round(timePassed*this.xyspeed));
+    this.x = this.x + this.Dx*(Math.round(timePassed*this.xySpeed));
+    this.y = this.y + this.Dy*(Math.round(timePassed*this.xySpeed));
     this.size= this.size - this.Dsize*Math.round(timePassed*this.sizeSpeed);
   }
   
@@ -30,7 +33,10 @@ class SnowBall {
     this.Dx = x-this.x;
     this.Dy = y-this.y;
     this.Dsize = distance;
+    this.moving = true;
   }
+  
+  
   
 }
 
