@@ -15,6 +15,6 @@ void setup(){
 
 void draw() {
   this.runningTime = millis();
-  //image(snowBallPic,snowball.x, snowball.y, snowball.size, snowball.size);
+  image(snowBallPic,snowball.x, snowball.y, snowball.size, snowball.size);
   snowball.chanceLoc(this.runningTime);
 }
