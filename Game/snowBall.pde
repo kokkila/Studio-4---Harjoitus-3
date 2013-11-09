@@ -45,7 +45,7 @@ class SnowBall {
   
   //Tarkistaa osuuko pallo santaan
   //Tarvittaessa vähentää elämiä
-  void checkCollision(Santa){
+  void checkCollision(Santa santa){
       
   }
   

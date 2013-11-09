@@ -1,0 +1,5 @@
+class Santa{
+  public Santa (){
+
+  }
+}

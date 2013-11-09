@@ -3,17 +3,19 @@ PImage snowBallPic;
 int runningTime;
 int windowSizeX, windowSizeY;
 int points, lives;
+boolean started, finished;
 SnowBall snowball;
 Santa santa;
 ArrayList<SnowBall> snowBalls;
 ArrayList<Creature> creatures; // Tää varmaan voisi olla sanakirja, tyyliin slot->creature(t)
-HashMap<Slot, Creature> creaturesMap; // EN tiedä yhtään toimiiko tää
+//HashMap<Slot, Creature> creaturesMap; // EN tiedä yhtään toimiiko tää
 /* Iterointi onnistuu näin
 for (Object value : map.values()) {
     // ...
 }*/
 GUI gui;
 StartScreen startScreen;
+EndScreen endScreen;
 
 
 void setup(){
@@ -28,14 +30,17 @@ void setup(){
 }
 
 void startGame(){
-  while lives > 0{
+  while (!started){
+    
+  }
+  while (lives > 0){
     moveSnowballs();
     checkCollisions();
     generateCreatures();
     generateSnowBalls();
     gui.draw();
   }
-  //ENDSCREEN  
+  //ENDSCREEN sopivilla arvoilla
 }
 
 public void moveSnowBalls(){
@@ -70,6 +75,14 @@ void draw() {
   this.runningTime = millis();
   image(snowBallPic,snowball.x, snowball.y, snowball.size, snowball.size);
   snowball.chanceLoc(this.runningTime);
+}
+
+public void setStarted(Boolean started){
+  this.started = started;
+}
+
+public void setEnded(Boolean ended){
+  this.ended = ended;
 }
 
 public int getLives(){
