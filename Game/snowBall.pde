@@ -36,6 +36,19 @@ class SnowBall {
     this.moving = true;
   }
   
+  //Tarkistaa osuuko pallo otukseen c
+  //Muista huomioida myös etäisyys Santasta
+  //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
+  void checkCollision(Creature c){
+      
+  }
+  
+  //Tarkistaa osuuko pallo santaan
+  //Tarvittaessa vähentää elämiä
+  void checkCollision(Santa){
+      
+  }
+  
   
   
 }
