@@ -14,6 +14,7 @@ void setup(){
 }
 
 void draw() {
+  // Testaan githubia T: Atro
   this.runningTime = millis();
   image(snowBallPic,snowball.x, snowball.y, snowball.size, snowball.size);
   snowball.chanceLoc(this.runningTime);
