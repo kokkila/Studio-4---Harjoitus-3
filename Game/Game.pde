@@ -70,7 +70,7 @@ public void generateSnowballs(){
 
 
 
-//Draw pitäisi olla GUI:ssa
+//Draw pitäisi olla GUI:ssa, Lauri: voidaan mun puolesta ottaa pois, se oli vaan alun testaukseen
 void draw() {
   this.runningTime = millis();
   image(snowBallPic,snowball.x, snowball.y, snowball.size, snowball.size);

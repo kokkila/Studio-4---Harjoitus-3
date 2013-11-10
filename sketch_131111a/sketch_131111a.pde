@@ -1,11 +1,10 @@
 class SnowBall {
   boolean moving;
-  boolean moving;
   int x, y;
   int Dx, Dy;
   int startTime;
   float size;
-
+  
   // nopeudet jolla palloa siirretään: pineneminen ja siirtyminen xy
   float sizeSpeed;
   float xySpeed;
@@ -17,6 +16,8 @@ class SnowBall {
     this.size = size;
     this.xySpeed = 0.000015;
     this.sizeSpeed = -0.0000007;
+ 
+
   }
 
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
@@ -29,46 +30,52 @@ class SnowBall {
     this.y = this.y + Math.round(this.Dy*timePassed*this.xySpeed);
     this.size= this.size - Math.round(this.Dy*timePassed*this.sizeSpeed);
   }
-
+  
   // mihin pallo heitetään, ja kuinka paljon piennetään -> logiikkaa mietittävä, jos lasketaankin y:n arvosta pienentäminen
-  void throwBallto(int x, int y, int distance) {
+  void throwBallto(int x, int y, int startTime){
     this.Dx = x-this.x;
     this.Dy = y-this.y;
-    this.Dsize = distance;
+    this.startTime = startTime;
     this.moving = true;
+    
   }
-
+  
   //Tarkistaa osuuko pallo otukseen c
   //Muista huomioida myös etäisyys Santasta
   //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
-  void checkCollision(Creature c) {
-  }
-
-  //Tarkistaa osuuko pallo santaan
-  //Tarvittaessa vähentää elämiä
-  void checkCollision(Santa santa) {
-  }
-
-  int getX() {
+//  void checkCollision(Creature c){
+//      
+//  }
+//  
+//  //Tarkistaa osuuko pallo santaan
+//  //Tarvittaessa vähentää elämiä
+//  void checkCollision(Santa santa){
+//      
+//  }
+  
+  int getX(){
     return this.x;
   }
-  int getY() {
+  int getY(){
     return this.y;
   }
-  boolean isMoving() {
+  boolean isMoving(){
     return moving;
   }
-
-  void setX(int x) {
+  
+  void setX(int x){
     this.x = x;
   }
-
-  void setY(int y) {
+  
+  void setY(int y){
     this.y = y;
   }
-
-  void setMoving(boolean moving) {
+  
+  void setMoving(boolean moving){
     this.moving = moving;
   }
+  
+  
+  
 }
 
