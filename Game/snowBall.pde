@@ -1,14 +1,17 @@
 class SnowBall {
   boolean moving;
   boolean toSanta;
+  // x ja y mihin pallo piirretään
   int x, y;
+  //aloitus pisteet
+  int orgX, orgY;
   int Dx, Dy, distance;
   int startTime;
-  float size;
+  float size, topSize;
 
   // nopeudet jolla palloa siirretään: pineneminen ja siirtyminen xy
   float sizeSpeed;
-  float xySpeed;
+  float timeConverter;
 
   PImage ballPic;
   Game game;
@@ -16,9 +19,12 @@ class SnowBall {
   SnowBall(int startX, int startY, float size, Game game) {
     this.x = startX;
     this.y = startY;
-    this.size = size;
-    this.xySpeed = 0.000015;
-    this.sizeSpeed = -0.0000007;
+    this.topSize = size;
+    this.sizeSpeed = 0.01;
+    this.size = Math.round(this.sizeSpeed*this.y)+this.topSize;
+    this.orgX = startX;
+    this.orgY = startY;
+    this.timeConverter = 3;
     this.game = game;
   }
 
@@ -26,25 +32,29 @@ class SnowBall {
     img(this.ballPic, this.x, this.y);
   }
 
+  void updateLoc(int currentTime) {
+  }
+
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
   void chanceLoc(int currentTime) {
     if (moving) {
-      int timePassed = currentTime - startTime;
+      float timePassed = currentTime - startTime;
       if (this.Dx == 0 || this.Dy== 0) {
         println("ERROR: SnowBall Dx or Dy is 0!!");
       }
-      this.x = this.x + Math.round(this.Dx*timePassed*this.xySpeed);
-      this.y = this.y + Math.round(this.Dy*timePassed*this.xySpeed);
-      this.size= this.size - Math.round(timePassed*this.sizeSpeed);
+      this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
+      this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
+      this.setSize(Math.round(this.sizeSpeed*this.y)+this.topSize);
     }
   }
 
   // mihin pallo heitetään, ja lasketaan kuinka kaukana millisekunteina kohde on 
-  void throwBallto(int x, int y) {
+  void throwBallto(int x, int y, int currentTime) {
     this.Dx = x-this.x;
     this.Dy = y-this.y;
+    this.startTime = currentTime;
     //etäisyys millisekunteina eli kauan lento kestää
-    this.distance = math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.sizeSpeed);
+    this.distance = Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter);
     println("distance:" + this.distance);
     this.moving = true;
     if (game.getSanta().isHere(x, y)) {
@@ -81,6 +91,9 @@ class SnowBall {
   int getY() {
     return this.y;
   }
+  float getSize() {
+    return this.size;
+  }
   boolean isMoving() {
     return moving;
   }
@@ -91,6 +104,10 @@ class SnowBall {
 
   void setY(int y) {
     this.y = y;
+  }
+
+  void setSize(float size) {
+    this.size = size;
   }
 
   void setMoving(boolean moving) {
