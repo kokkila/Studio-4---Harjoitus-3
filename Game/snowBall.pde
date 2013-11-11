@@ -10,8 +10,9 @@ class SnowBall {
   float sizeSpeed;
   float xySpeed;
 
+  PImage ballPic;
   Game game;
-  
+
   SnowBall(int startX, int startY, float size, Game game) {
     this.x = startX;
     this.y = startY;
@@ -21,15 +22,21 @@ class SnowBall {
     this.game = game;
   }
 
+  void display() {
+    img(this.ballPic, this.x, this.y);
+  }
+
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
   void chanceLoc(int currentTime) {
-    int timePassed = currentTime - startTime;
-    if (this.Dx == 0 || this.Dy== 0) {
-      println("ERROR: SnowBall Dx or Dy is 0!!");
+    if (moving) {
+      int timePassed = currentTime - startTime;
+      if (this.Dx == 0 || this.Dy== 0) {
+        println("ERROR: SnowBall Dx or Dy is 0!!");
+      }
+      this.x = this.x + Math.round(this.Dx*timePassed*this.xySpeed);
+      this.y = this.y + Math.round(this.Dy*timePassed*this.xySpeed);
+      this.size= this.size - Math.round(timePassed*this.sizeSpeed);
     }
-    this.x = this.x + Math.round(this.Dx*timePassed*this.xySpeed);
-    this.y = this.y + Math.round(this.Dy*timePassed*this.xySpeed);
-    this.size= this.size - Math.round(timePassed*this.sizeSpeed);
   }
 
   // mihin pallo heitetään, ja lasketaan kuinka kaukana millisekunteina kohde on 
@@ -37,10 +44,11 @@ class SnowBall {
     this.Dx = x-this.x;
     this.Dy = y-this.y;
     //etäisyys millisekunteina eli kauan lento kestää
-    this.distance = (int) sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.sizeSpeed; 
+    this.distance = math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.sizeSpeed);
+    println("distance:" + this.distance);
     this.moving = true;
-    if(game.getSanta().isHere(x,y)){
-        this.toSanta == true;
+    if (game.getSanta().isHere(x, y)) {
+      this.toSanta = true;
     }
   }
 
@@ -49,11 +57,14 @@ class SnowBall {
   //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
   void checkCollision(Creature c, int currentTime) {  
     // jos pallo lentänyt vaadittavan ajan
-    if((currentTime-this.startTime)>= this.distance){
-      if(c.isHere(this.x, this.y)){
+    if ((currentTime-this.startTime)>= this.distance) {
+      if (c.isHere(this.x+(this.size/2), this.y+(this.size)/2)) {
         game.removeCreatures(c);
+        this.moving = false;
+        this.Dx = 0;
+        this.Dy = 0;
       }
-      else{
+      else {
         println("Ball missed all targets");
       }
     }
@@ -62,7 +73,6 @@ class SnowBall {
   //Tarkistaa osuuko pallo santaan
   //Tarvittaessa vähentää elämiä
   void checkCollision(Santa santa) {
-    if((
   }
 
   int getX() {
