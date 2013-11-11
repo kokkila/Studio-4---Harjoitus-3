@@ -1,6 +1,7 @@
 class Santa{
   boolean visible;
   int x, y;
+  int size;
   
   public Santa (){
 
@@ -15,7 +16,11 @@ class Santa{
   boolean isVisible() {
     return visible;
   }
-
+  
+  boolean isHere(int x, int y){
+    
+  }
+  
   void setX(int x) {
     this.x = x;
   }

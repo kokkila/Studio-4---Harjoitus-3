@@ -1,6 +1,6 @@
 class SnowBall {
   boolean moving;
-  boolean moving;
+  boolean toSanta;
   int x, y;
   int Dx, Dy, distance;
   int startTime;
@@ -39,17 +39,22 @@ class SnowBall {
     //etäisyys millisekunteina eli kauan lento kestää
     this.distance = (int) sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.sizeSpeed; 
     this.moving = true;
+    if(game.getSanta().isHere(x,y)){
+        this.toSanta == true;
+    }
   }
 
   //Tarkistaa osuuko pallo otukseen c
   //Muista huomioida myös etäisyys Santasta
   //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
-  void checkCollision(Creature c, int currentTime) {
-    
+  void checkCollision(Creature c, int currentTime) {  
     // jos pallo lentänyt vaadittavan ajan
     if((currentTime-this.startTime)>= this.distance){
       if(c.isHere(this.x, this.y)){
         game.removeCreatures(c);
+      }
+      else{
+        println("Ball missed all targets");
       }
     }
   }
@@ -57,6 +62,7 @@ class SnowBall {
   //Tarkistaa osuuko pallo santaan
   //Tarvittaessa vähentää elämiä
   void checkCollision(Santa santa) {
+    if((
   }
 
   int getX() {
