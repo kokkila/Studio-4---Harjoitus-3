@@ -25,4 +25,7 @@ class Creature{
   void goDown() {
     // pehmeä kuvan liikuttaminen ylhäältä piiloon - pitää olla layer jonka alle menee
   }
+  
+  // metodi, osuiko creatureen. otetaan huomioon this.x, this.y, hitboxina täsät x+kuvankoko, y+kuvankoko ja oliko ylhäällä
+  // dummymetodina, kun hitbox tehty, aluksi vaikka println("sprölölölöö") jotta tietää toimiiko
 }
