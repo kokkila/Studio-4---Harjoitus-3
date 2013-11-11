@@ -118,5 +118,6 @@ public void removeSnowBalls(SnowBall sB){
 }
 
 public void removeCreatures(Creature c){
+  // tämän lisättävä myös pisteitä oikean verran, koska snowBall kutsuu tätä kun osuu T. lauri
   creatures.remove(c);
 }

@@ -2,7 +2,7 @@ class SnowBall {
   boolean moving;
   boolean moving;
   int x, y;
-  int Dx, Dy;
+  int Dx, Dy, distance;
   int startTime;
   float size;
 
@@ -10,13 +10,15 @@ class SnowBall {
   float sizeSpeed;
   float xySpeed;
 
-
-  SnowBall(int startX, int startY, float size) {
+  Game game;
+  
+  SnowBall(int startX, int startY, float size, Game game) {
     this.x = startX;
     this.y = startY;
     this.size = size;
     this.xySpeed = 0.000015;
     this.sizeSpeed = -0.0000007;
+    this.game = game;
   }
 
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
@@ -27,21 +29,29 @@ class SnowBall {
     }
     this.x = this.x + Math.round(this.Dx*timePassed*this.xySpeed);
     this.y = this.y + Math.round(this.Dy*timePassed*this.xySpeed);
-    this.size= this.size - Math.round(this.Dy*timePassed*this.sizeSpeed);
+    this.size= this.size - Math.round(timePassed*this.sizeSpeed);
   }
 
-  // mihin pallo heitetään, ja kuinka paljon piennetään -> logiikkaa mietittävä, jos lasketaankin y:n arvosta pienentäminen
-  void throwBallto(int x, int y, int distance) {
+  // mihin pallo heitetään, ja lasketaan kuinka kaukana millisekunteina kohde on 
+  void throwBallto(int x, int y) {
     this.Dx = x-this.x;
     this.Dy = y-this.y;
-    this.Dsize = distance;
+    //etäisyys millisekunteina eli kauan lento kestää
+    this.distance = (int) sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.sizeSpeed; 
     this.moving = true;
   }
 
   //Tarkistaa osuuko pallo otukseen c
   //Muista huomioida myös etäisyys Santasta
   //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
-  void checkCollision(Creature c) {
+  void checkCollision(Creature c, int currentTime) {
+    
+    // jos pallo lentänyt vaadittavan ajan
+    if((currentTime-this.startTime)>= this.distance){
+      if(c.isHere(this.x, this.y)){
+        game.removeCreatures(c);
+      }
+    }
   }
 
   //Tarkistaa osuuko pallo santaan
