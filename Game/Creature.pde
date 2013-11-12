@@ -1,41 +1,46 @@
 //logiikka: creaturet luodaan vain kerran jokaiselle paikalle
 //jos osuu, peliluokka käskee mennä alas (käytetäänkö jotain osumisanimaatiota?
 //kun uusi spawnaa, käsketään nousta ylös
-PImage creature;
+
 
 class Creature{
   int x, y, timeUp, moveTime;
-  boolean visible; // onko näkyvillä (ylhäällä) vai piilossa (alhaalla)
+  boolean visible; // onko näkyvillä = ylhäällä = true vai piilossa = alhaalla = false
+  PImage creatureImage;
 
   Creature(int x, int y) {
     this.x = x;
     this.y = y;
-    kuva = kuvatiedosto kansiosta;
+    this.visible = false; // oletusarvo
+    this.creatureImage = loadImage("tiedostonnimi.png");
   }
 
   void display() {
-    // piirtää x, y -koordinaatteihin kuvat
+    image(this.creatureImage, this.x, this.y);
   }
 
-  void throwSnowBall(Santa santa / Creature c ?){ //luo uuden lumipallo-olion, joka lähtee kohti santaa (creaturea)
-    new SnowBall(x, y, koko, nopeus ???).throwBallto(x, y, distance ???);
-    // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuko?
+  void throwSnowBall(Creature anotherCreature) {   // luo uuden lumipallo-olion, joka lähtee kohti creaturea
+    new SnowBall(x, y).throwBallto(x, y); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
   }
   
-  void riseUp(peliaika) {
+  void riseUp() {
     // pehmeä kuvan liikuttaminen piilosta ylös - huom, pitää olla layereita jonka takaa creature tulee
-    //
+    this.visible = true;
   }
   
   void goDown() {
     // pehmeä kuvan liikuttaminen ylhäältä piiloon - pitää olla layer jonka alle menee
+    this.visible = false;
   }
   
-  
-  // metodi, osuiko creatureen. otetaan huomioon this.x, this.y, hitboxina täsät x+kuvankoko, y+kuvankoko ja oliko ylhäällä
-  boolean isHere(int x, int y){
-    // palauttaa true jos on näissä koordinaateissa
+  boolean checkHit(int x, int y) { // tarkistetaan, osuiko annettulla (x,y)-koordinaattiparilla tähän creaturen. käytännössä, osuiko hitboxiin ja oliko creature ylhäällä
+    if (this.isHere(x, y) && this.visible) return true;
+    else return false;
   }
   
-  // dummymetodina, kun hitbox tehty, aluksi vaikka println("sprölölölöö") jotta tietää toimiiko
+  boolean isHere(int x, int y) {  // metodi jolla tarkistetaan, kuuluuko annettu (x,y)-koordinaattipari kuva-alueelle (hitbox)
+    if (x >= this.x && x <= this.x+this.creatureImage.width && y >= this.y && y <= this.y+this.creatureImage.height) return true;
+    else return false;
+  }
+  
 }
