@@ -13,10 +13,10 @@ class SnowBall {
   float sizeSpeed;
   float timeConverter;
 
-  PImage ballPic;
+  PImage ballImage;
   Game game;
 
-  SnowBall(int startX, int startY, float size, Game game) {
+  SnowBall(int startX, int startY, float size, PImage ballImage Game game) {
     this.x = startX;
     this.y = startY;
     this.topSize = size;
@@ -26,14 +26,14 @@ class SnowBall {
     this.orgY = startY;
     this.timeConverter = 3;
     this.game = game;
+    this.ballImage = ballImage;
   }
 
   void display() {
-    img(this.ballPic, this.x, this.y);
+    img(this.ballImage, this.x, this.y);
   }
 
-  void updateLoc(int currentTime) {
-  }
+ 
 
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
   void chanceLoc(int currentTime) {
@@ -83,6 +83,7 @@ class SnowBall {
   //Tarkistaa osuuko pallo santaan
   //Tarvittaessa vähentää elämiä
   void checkCollision(Santa santa) {
+    
   }
 
   int getX() {
