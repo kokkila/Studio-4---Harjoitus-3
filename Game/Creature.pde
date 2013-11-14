@@ -4,14 +4,21 @@
 
 class Creature{
   int x, y, timeUp, moveTime, timeCreated;
-  boolean visible; // onko näkyvillä = ylhäällä = true vai piilossa = alhaalla = false
+  boolean visible, hasThrown; // onko näkyvillä = ylhäällä = true vai piilossa = alhaalla = false
   PImage creatureImage;
+  GameEngine gameEngine;
 
-  Creature(int x, int y, int timeUp, int moveTime, int timeCreated) {  // x ja y halutut lopulliset paikat
+  Creature(int x, int y, int timeUp, int moveTime, int timeCreated, GameEngine gameEngine) {  // x ja y halutut lopulliset paikat
     this.x = x;
     this.y = y;
+    this.timeUp = timeUp;
+    this.moveTime = moveTime;
+    this.timeCreated = timeCreated;
     this.visible = false; // oletusarvo. turha?
-    this.creatureImage = loadImage("tiedostonnimi.png");
+    this.hasThrown = false;
+    this.gameEngine = gameEngine;
+    //this.creatureImage = loadImage("tiedostonnimi.png");
+    println("UUSI CREATURE LUOTIIN");
   }
 
   void display(int timeNow) {
@@ -22,8 +29,10 @@ class Creature{
     image(this.creatureImage, this.x, this.y); // eli this.y riippuu ajasta, lasketaan ajan perusteella
   }
 
-  void throwSnowBall(Creature anotherCreature) {   // luo uuden lumipallo-olion, joka lähtee kohti creaturea
-    new SnowBall(x, y).throwBallto(x, y); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
+  //Atro: Creaturet heittää Santaa
+  void throwSnowBall(Santa santa, int timeThrown) {   // luo uuden lumipallo-olion, joka lähtee kohti creaturea
+    new SnowBall(x, y, 1, this.gameEngine).throwBallto(x, y, timeThrown); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
+    this.hasThrown = true;
   }
   
   void riseUp() {
@@ -45,6 +54,10 @@ class Creature{
     // boksin koko suurenee/pienenee jos ukkeli liikkuu ylös, toteuta logiikka sen perusteella
     if (x >= this.x && x <= this.x+this.creatureImage.width && y >= this.y && y <= this.y+this.creatureImage.height) return true;
     else return false;
+  }
+  
+  boolean hasThrown(){
+    return this.hasThrown;
   }
   
 }
