@@ -32,7 +32,7 @@ class SnowBall {
   }
 
   void display() {
-    println("Pallo piirretään");
+    //println("Pallo piirretään");
     image(this.ballPic, this.x, this.y);
   }
 
@@ -50,7 +50,7 @@ class SnowBall {
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
       this.setSize(Math.round(this.sizeSpeed*this.y)+this.topSize);
-      println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
+      //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
     }
   }
 

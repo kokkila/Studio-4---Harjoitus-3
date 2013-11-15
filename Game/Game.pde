@@ -35,11 +35,54 @@ void setup(){
 void draw(){
   background(0);
   this.runningTime = millis();
+  if(!mousePressed){
+    gameEngine.santa.moving = false;
+  }
   gameEngine.updateGame(runningTime);
   //Gui.draw()
 }
 void mousePressed(){
   if(mouseY < 500){
     new SnowBall(200, 200, 1, gameEngine).throwBallto(mouseX, mouseY, runningTime);
+  }
+}
+void mouseDragged(){
+  if(mouseY > 500 && mouseY <= 550 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && !gameEngine.santa.moving){
+    gameEngine.santa.moving = false;
+    println("Down0");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 550 && mouseY <= 600 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && !gameEngine.santa.moving){
+    //gameEngine.santa.visible = false;
+    gameEngine.santa.moving = true;
+    println("Down1");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 600 && mouseY <= 650 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && gameEngine.santa.moving){
+    gameEngine.santa.visible = false;
+    gameEngine.santa.moving = false;
+    println("Down2");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY >= 600 && mouseY < 650 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && !gameEngine.santa.moving){
+    //gameEngine.santa.moving = true;
+    println("Up0");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 550 && mouseY <= 600 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && !gameEngine.santa.moving){
+    //gameEngine.santa.visible = true;
+    gameEngine.santa.moving = true;
+    println("Up1");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 500 && mouseY <= 550 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && gameEngine.santa.moving){
+    gameEngine.santa.visible = true;
+    gameEngine.santa.moving = false;
+    println("Up2");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if (mouseX < 170 || mouseX > 230){
+    println("Ohi");
+    gameEngine.santa.moving = false;
   }
 }

@@ -40,7 +40,22 @@ class Santa{
   
   void display(boolean wasPressed, int y, int x){
     
-    //Atro: tää on java modelle
+    
+    fill(255,0,0);
+    rectMode(CORNER);
+    if (moving){
+      //println("drawMoving");
+      rect(this.x, this.y+50, 40, 100);
+    }
+    else if (visible){
+      //println("drawVisible");
+      rect(this.x, this.y, 40, 150);
+    }
+    else{
+      //println("drawHidden");
+      rect(this.x, this.y+100, 40, 50);
+    }
+    /*//Atro: tää on java modelle
     fill(255,0,0);
     rectMode(CORNER);
     if (wasPressed && x > this.x && x < this.x + 40 && y > this.y){
@@ -49,7 +64,7 @@ class Santa{
     }
     else{
       rect(this.x, this.y, 40, 150);
-    }
+    }*/
     
     //Atro: tän pitäisi toimia Android Modessa. Siinä menee toi koordinaatisto ihan sekaisin
     /*fill(255,0,0);
