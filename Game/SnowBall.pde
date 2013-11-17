@@ -12,11 +12,12 @@ class SnowBall {
   // nopeudet jolla palloa siirretään: pineneminen ja siirtyminen xy
   float sizeSpeed;
   float timeConverter;
+  PImage ballPic;
+  GameEngine gameEngine;
 
-  PImage ballImage;
-  Game game;
 
-  SnowBall(int startX, int startY, float size, PImage ballImage Game game) {
+
+  SnowBall(int startX, int startY, float size, GameEngine gameEngine) {
     this.x = startX;
     this.y = startY;
     this.topSize = size;
@@ -25,17 +26,21 @@ class SnowBall {
     this.orgX = startX;
     this.orgY = startY;
     this.timeConverter = 3;
-    this.game = game;
-    this.ballImage = ballImage;
+    this.gameEngine = gameEngine;
+    this.ballPic=loadImage("snowball.png");
   }
 
   void display() {
-    img(this.ballImage, this.x, this.y);
+    image(this.ballPic, this.x, this.y);
+    this.gameEngine = gameEngine;
+    println("Uusi pallo luotiin");
+    gameEngine.addSnowBalls(this);
   }
 
  
 
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
+  // Atro: Pallot ei liiku
   void chanceLoc(int currentTime) {
     if (moving) {
       float timePassed = currentTime - startTime;
@@ -45,6 +50,7 @@ class SnowBall {
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
       this.setSize(Math.round(this.sizeSpeed*this.y)+this.topSize);
+      //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
     }
   }
 
@@ -55,9 +61,9 @@ class SnowBall {
     this.startTime = currentTime;
     //etäisyys millisekunteina eli kauan lento kestää
     this.distance = Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter);
-    println("distance:" + this.distance);
+    //println("distance:" + this.distance);
     this.moving = true;
-    if (game.getSanta().isHere(x, y)) {
+    if (gameEngine.getSanta().isHere(x, y)) {
       this.toSanta = true;
     }
   }
@@ -68,8 +74,9 @@ class SnowBall {
   void checkCollision(Creature c, int currentTime) {  
     // jos pallo lentänyt vaadittavan ajan
     if ((currentTime-this.startTime)>= this.distance) {
-      if (c.isHere(this.x+(this.size/2), this.y+(this.size)/2)) {
-        game.removeCreatures(c);
+      //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
+      if (c.isHere((int)(this.x+(this.size/2)), (int)(this.y+(this.size)/2))) {
+        gameEngine.removeCreatures(c);
         this.moving = false;
         this.Dx = 0;
         this.Dy = 0;

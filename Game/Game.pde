@@ -13,6 +13,7 @@ ArrayList<Creature> creatures; // Tää varmaan voisi olla sanakirja, tyyliin sl
 for (Object value : map.values()) {
     // ...
 }*/
+GameEngine gameEngine;
 GUI gui;
 StartScreen startScreen;
 EndScreen endScreen;
@@ -23,101 +24,65 @@ void setup(){
   windowSizeX = 400;
   windowSizeY = 700;
   size(windowSizeX, windowSizeY);
-  snowBallPic = loadImage("snowball.png");
-  snowball = new SnowBall(100, 600, 50, 0.001);
+  this.gameEngine = new GameEngine(3, this);
+  //snowBallPic = loadImage("snowball.png");
+  //snowball = new SnowBall(100, 600, 50, 0.001);
   //Luodaan startScreen
-  startScreen.draw();
-}
-
-void startGame(){
-  while (!started){
-    
-  }
-  while (lives > 0){
-    moveSnowballs();
-    checkCollisions();
-    generateCreatures();
-    generateSnowBalls();
-    gui.draw();
-  }
-  //ENDSCREEN sopivilla arvoilla
-}
-
-public void moveSnowBalls(){
-  for (SnowBall sb: snowBalls){
-    sb.chanceLoc(this.runningTime);
-  }
-}
-
-public void checkCollisions(){
-  for (SnowBall sb: snowBalls){
-     for (Creature c: creatures){
-       sb.checkCollision(c);
-       sb.checkCollision(santa);
-     }
-  }
-}
-
-public void generateCreatures(){
-  //Luo satunnaisesti otuksia ennalta määrättyihin slotteihin, mikäli slotissa ei ole vielä otusta
-}
-
-public void generateSnowballs(){
-  for (Creature c: creatures){
-    //throwSnowBall(this.santa) satunnaisesti
-  }
+  //startScreen.draw();
 }
 
 
-
-//Draw pitäisi olla GUI:ssa, Lauri: voidaan mun puolesta ottaa pois, se oli vaan alun testaukseen
-void draw() {
+void draw(){
+  background(0);
   this.runningTime = millis();
-  image(snowBallPic,snowball.x, snowball.y, snowball.size, snowball.size);
-  snowball.chanceLoc(this.runningTime);
+  if(!mousePressed){
+    gameEngine.santa.moving = false;
+  }
+  gameEngine.updateGame(runningTime);
+  //Gui.draw()
 }
-
-public void setStarted(Boolean started){
-  this.started = started;
+void mousePressed(){
+  if(mouseY < 500){
+    new SnowBall(200, 200, 1, gameEngine).throwBallto(mouseX, mouseY, runningTime);
+  }
 }
-
-public void setEnded(Boolean ended){
-  this.ended = ended;
-}
-
-public int getLives(){
-  return lives;
-}
-
-public int getPoints(){
-  return points;
-}
-
-public Santa getSanta(){
-  return this.santa;
-}
-
-public void substractLives(int i){
-  this.lives = this.lives - i;
-}
-
-public void addPoints(int i){
-  this.points = this.points + i;
-}
-
-public void addSnowBalls(SnowBall sB){
-  snowballs.add(sB);
-}
-
-public void addCreatures(Creature c){
-  creatures.add(c);
-}
-
-public void removeSnowBalls(SnowBall sB){
-  snowBalls.remove(sB);
-}
-
-public void removeCreatures(Creature c){
-  // tämän lisättävä myös pisteitä oikean verran, koska snowBall kutsuu tätä kun osuu T. lauri
-  creatures.remove(c);
+void mouseDragged(){
+  if(mouseY > 500 && mouseY <= 550 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && !gameEngine.santa.moving){
+    gameEngine.santa.moving = false;
+    println("Down0");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 550 && mouseY <= 600 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && !gameEngine.santa.moving){
+    //gameEngine.santa.visible = false;
+    gameEngine.santa.moving = true;
+    println("Down1");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 600 && mouseY <= 650 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && gameEngine.santa.moving){
+    gameEngine.santa.visible = false;
+    gameEngine.santa.moving = false;
+    println("Down2");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY >= 600 && mouseY < 650 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && !gameEngine.santa.moving){
+    //gameEngine.santa.moving = true;
+    println("Up0");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 550 && mouseY <= 600 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && !gameEngine.santa.moving){
+    //gameEngine.santa.visible = true;
+    gameEngine.santa.moving = true;
+    println("Up1");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if(mouseY > 500 && mouseY <= 550 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && gameEngine.santa.moving){
+    gameEngine.santa.visible = true;
+    gameEngine.santa.moving = false;
+    println("Up2");
+    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
+  }
+  else if (mouseX < 170 || mouseX > 230){
+    println("Ohi");
+    gameEngine.santa.moving = false;
+  }
 }
