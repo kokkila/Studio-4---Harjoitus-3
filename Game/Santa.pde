@@ -15,25 +15,6 @@ class Santa {
     //this.santaImage = loadImage("santa.png");
   }
 
-  // display päivittää koordinaatit tiedot, eli riittää kun kutsuu sitä
- void display(int timeNow) {
-    int timeOnMove;
-    if (moving) {
-      if (visible) {
-        timeOnMove = timeNow-movingStartTime;
-      }
-      else {
-        timeOnMove = -(timeNow-movingStartTime);
-      }
-      // Jos liike on lopussa
-      if (abs(timeOnMove)>=1) {
-        moving = false;
-      }
-      else {
-        this.y = this.y + Math.round((timeOnMove/risingTime)*santaImage.height);
-      }
-    }
-  }
 
   void move(boolean up, int timeNow) {
     this.moving = true;
@@ -74,9 +55,29 @@ class Santa {
   void setMoving(boolean visible) {
     this.moving = visible;
   }
+  
+   //päivittää koordinaatit tiedot, eli riittää kun kutsuu sitä
+ void updateCord(int timeNow) {
+    int timeOnMove;
+    if (moving) {
+      if (visible) {
+        timeOnMove = timeNow-movingStartTime;
+      }
+      else {
+        timeOnMove = -(timeNow-movingStartTime);
+      }
+      // Jos liike on lopussa
+      if (abs(timeOnMove)>=1) {
+        moving = false;
+      }
+      else {
+        this.y = this.y + Math.round((timeOnMove/risingTime)*santaImage.height);
+      }
+    }
+  }
 
   void display(boolean wasPressed, int y, int x) {
-
+    // lauri: updateCord(timeNow);
 
     fill(255, 0, 0);
     rectMode(CORNER);
@@ -113,5 +114,7 @@ class Santa {
      rect(game.height*0.10, game.width*0.45, game.height*0.20, game.width*0.10);
      }*/
   }
+  
+ 
 }
 

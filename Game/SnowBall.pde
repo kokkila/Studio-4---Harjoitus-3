@@ -60,7 +60,7 @@ class SnowBall {
     this.Dy = y-this.y;
     this.startTime = currentTime;
     //etäisyys millisekunteina eli kauan lento kestää
-    this.distance = Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter);
+    this.distance = abs(Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter));
     //println("distance:" + this.distance);
     this.moving = true;
     if (gameEngine.getSanta().isHere(x, y)) {
@@ -89,8 +89,15 @@ class SnowBall {
 
   //Tarkistaa osuuko pallo santaan
   //Tarvittaessa vähentää elämiä
-  void checkCollision(Santa santa) {
-    
+  void checkCollision(Santa santa, int currentTime) {
+    if ((currentTime-this.startTime)>= this.distance) {
+      if(santa.visible){
+       gameEngine.sustractLives(1);
+       this.moving = false;
+       this.Dx = 0;
+       this.Dy = 0;
+      }
+    }
   }
 
   int getX() {

@@ -18,7 +18,6 @@ GUI gui;
 StartScreen startScreen;
 EndScreen endScreen;
 
-
 void setup(){
   lives = 3;
   windowSizeX = 400;
