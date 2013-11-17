@@ -92,7 +92,7 @@ class SnowBall {
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
       if(santa.visible){
-       gameEngine.sustractLives(1);
+       gameEngine.substractLives(1);
        this.moving = false;
        this.Dx = 0;
        this.Dy = 0;
