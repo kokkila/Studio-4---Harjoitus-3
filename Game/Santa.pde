@@ -15,19 +15,21 @@ class Santa {
     //this.santaImage = loadImage("santa.png");
   }
 
-
-  void move(boolean up, int timeNow) {
-    this.moving = true;
-    this.movingStartTime = timeNow;
-    if (up) {
-      this.risingTime = this.risingTime * ((this.y - this.upY)/santaImage.height);
-        this.visible = true;
-    }
-    else {
-      this.risingTime = this.risingTime * (((this.upY+santaImage.height)-this.y)/santaImage.height);
-        this.visible = false;
-    }
-  }
+  //
+  //void followMouse(boolean up, int timeNow) {
+//    this.moving = true;
+//    this.movingStartTime = timeNow;
+//    if (up) {
+//      this.risingTime = this.risingTime * ((this.y - this.upY)/santaImage.height);
+//      this.visible = true;
+//    }
+//    else {
+//      this.risingTime = this.risingTime * (((this.upY+santaImage.height)-this.y)/santaImage.height);
+//      this.visible = false;
+//    }
+//  }
+  
+  void check
 
 
   int getX() {
@@ -56,9 +58,19 @@ class Santa {
     this.moving = visible;
   }
   
-   //päivittää koordinaatit tiedot, eli riittää kun kutsuu sitä
+  // mouse start moving
+  void startMoving(){
+    
+  }
+  
+   //päivittää koordinaatit tiedot, eli riittää kun kutsuu sitä 
+   // siirätää ylöspäin tai alaspäin riippuen onko yli puolen välin
+   // jos hiiri alhaalla siirtää hiiren mukaan 
+   // mouseDown = true == sormi alhaalle
+   // kutsu tätä joka päivityksessä
  void updateCord(int timeNow) {
     int timeOnMove;
+    // kutsu mousePressed
     if (moving) {
       if (visible) {
         timeOnMove = timeNow-movingStartTime;

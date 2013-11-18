@@ -17,10 +17,10 @@ class SnowBall {
 
 
 
-  SnowBall(int startX, int startY, float size, GameEngine gameEngine) {
+  SnowBall(int startX, int startY, GameEngine gameEngine) {
     this.x = startX;
     this.y = startY;
-    this.topSize = size;
+    this.topSize = 50;
     this.sizeSpeed = 0.01;
     this.size = Math.round(this.sizeSpeed*this.y)+this.topSize;
     this.orgX = startX;
