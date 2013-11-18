@@ -20,6 +20,8 @@ class GameEngine{
   GameEngine(int lives, Game game){
     this.lives = lives;
     this.game = game;
+    
+    //Santalle annettava myös alhalla olon koordinaatti int downY
     this.santa = new Santa(180, 500);
     snowBalls = new ArrayList<SnowBall>();
     creaturesMap = new HashMap <Slot, Creature>();

@@ -1,36 +1,37 @@
 class Santa {
   boolean visible;
-   boolean moving;  
   int x, y;
-  int upY;
+  int upY, downY;
   PImage santaImage;
   // time in millis from down to up/up to down
   float risingTime;
   int movingStartTime;
+  int fromCornerY;
+  int timeLastMove;
 
-  public Santa (int x, int y) {
+
+  public Santa (int x, int y, int downY) {
     this.x = x;
     this.y = y;
     this.upY = y;
-    //this.santaImage = loadImage("santa.png");
+    this.downY = downY;
+    this.timeLastMove = 0;
+    this.santaImage = loadImage("santa.png");
   }
 
   //
   //void followMouse(boolean up, int timeNow) {
-//    this.moving = true;
-//    this.movingStartTime = timeNow;
-//    if (up) {
-//      this.risingTime = this.risingTime * ((this.y - this.upY)/santaImage.height);
-//      this.visible = true;
-//    }
-//    else {
-//      this.risingTime = this.risingTime * (((this.upY+santaImage.height)-this.y)/santaImage.height);
-//      this.visible = false;
-//    }
-//  }
-  
-  void check
-
+  //    this.moving = true;
+  //    this.movingStartTime = timeNow;
+  //    if (up) {
+  //      this.risingTime = this.risingTime * ((this.y - this.upY)/santaImage.height);
+  //      this.visible = true;
+  //    }
+  //    else {
+  //      this.risingTime = this.risingTime * (((this.upY+santaImage.height)-this.y)/santaImage.height);
+  //      this.visible = false;
+  //    }
+  //  }
 
   int getX() {
     return this.x;
@@ -54,57 +55,88 @@ class Santa {
     this.y = y;
   }
 
-  void setMoving(boolean visible) {
-    this.moving = visible;
-  }
-  
   // mouse start moving
-  void startMoving(){
-    
+  // tarkistaa kuinka kaukaa kulmasta kuvasta tartuttiin 
+  void startMoving() {
+    fromCornerY = mouseY-this.y;
   }
-  
-   //päivittää koordinaatit tiedot, eli riittää kun kutsuu sitä 
-   // siirätää ylöspäin tai alaspäin riippuen onko yli puolen välin
-   // jos hiiri alhaalla siirtää hiiren mukaan 
-   // mouseDown = true == sormi alhaalle
-   // kutsu tätä joka päivityksessä
- void updateCord(int timeNow) {
-    int timeOnMove;
-    // kutsu mousePressed
-    if (moving) {
-      if (visible) {
-        timeOnMove = timeNow-movingStartTime;
+
+
+  // päivittää koordinaatit tiedot, eli riittää kun kutsuu sitä 
+  // siirätää ylöspäin tai alaspäin riippuen onko yli puolen välin
+  // jos hiiri alhaalla siirtää hiiren mukaan 
+  // mouseDown = true == sormi alhaalle
+  // kutsu tätä joka päivityksessä
+  void updateCord(int timeNow) {
+    if (this.y <= upY && downY <= this.y) {
+      // time from last time moved
+      if (mousePressed) {
+        this.y = mouseY-fromCornerY;
       }
       else {
-        timeOnMove = -(timeNow-movingStartTime);
-      }
-      // Jos liike on lopussa
-      if (abs(timeOnMove)>=1) {
-        moving = false;
-      }
-      else {
-        this.y = this.y + Math.round((timeOnMove/risingTime)*santaImage.height);
+        if (timeNow-timeLastMove> 100) {
+          timeLastMove = timeNow;
+          // jos ollaan ylhäällä, liikutaan ylös
+          if (this.y < ((downY-upY)/2)+upY) {
+            this.y = this.y-1;
+          }
+          else {
+            this.y = this.y +1;
+          }
+        }
+        else {
+          timeLastMove = timeNow-timeLastMove;
+        }
       }
     }
+    // tarkistetaan ollaanko keskirajan ala vai yläpuolella
+    this.checkVisibility();
   }
+
+  void checkVisibility() {
+    if (this.y < ((downY-upY)/2)+upY) {
+      this.visible = true;
+    }
+    else {
+      this.visible = false;
+    }
+  }
+
+
+  //    // kutsu mousePressed
+  //    if (moving) {
+  //      if (visible) {
+  //        timeOnMove = timeNow-movingStartTime;
+  //      }
+  //      else {
+  //        timeOnMove = -(timeNow-movingStartTime);
+  //      }
+  //      // Jos liike on lopussa
+  //      if (abs(timeOnMove)>=1) {
+  //        moving = false;
+  //      }
+  //      else {
+  //        this.y = this.y + Math.round((timeOnMove/risingTime)*santaImage.height);
+  //      }
+
 
   void display(boolean wasPressed, int y, int x) {
     // lauri: updateCord(timeNow);
 
     fill(255, 0, 0);
     rectMode(CORNER);
-    if (moving) {
-      //println("drawMoving");
-      rect(this.x, this.y+50, 40, 100);
-    }
-    else if (visible) {
-      //println("drawVisible");
-      rect(this.x, this.y, 40, 150);
-    }
-    else {
-      //println("drawHidden");
-      rect(this.x, this.y+100, 40, 50);
-    }
+    //  if (moving) {
+    //    //println("drawMoving");
+    //    rect(this.x, this.y+50, 40, 100);
+    //  }
+    //  else if (visible) {
+    //    //println("drawVisible");
+    //    rect(this.x, this.y, 40, 150);
+    //  }
+    //  else {
+    //    //println("drawHidden");
+    //    rect(this.x, this.y+100, 40, 50);
+    //  }
     /*//Atro: tää on java modelle
      fill(255,0,0);
      rectMode(CORNER);
@@ -126,7 +158,5 @@ class Santa {
      rect(game.height*0.10, game.width*0.45, game.height*0.20, game.width*0.10);
      }*/
   }
-  
- 
 }
 
