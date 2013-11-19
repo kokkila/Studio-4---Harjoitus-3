@@ -10,16 +10,18 @@ class GUI{
   }
   public void display(){
   // piirtää taustan, takaCreaturet, takaKinos, etuCreaturet, etuKinos, Lumipallot, Santa sekä menun
+        imageMode(CORNER);
+
     image(backgroundImage, 0, 0);
     for (Creature c : gameEngine.creaturesMap.values()) {
       if (c != null){
         c.display(gameEngine.game.runningTime);// ...
       }
     }
+    imageMode(CENTER);
     for (SnowBall sb : gameEngine.snowBalls){
       sb.display();
     }
     gameEngine.santa.display();
-  
   }
 }

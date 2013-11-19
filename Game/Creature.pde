@@ -17,6 +17,7 @@ class Creature{
     this.hasThrown = false;
     this.gameEngine = gameEngine;
     this.creatureImage = loadImage("creature.jpg");
+    this.creatureImage.resize(100,100);
     println("UUSI CREATURE LUOTIIN");
   }
 

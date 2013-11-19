@@ -121,7 +121,7 @@ class Santa {
 
 
   void display() {
-    image(santaImage, x, y+fromCornerY);
+    image(santaImage, x, y+fromCornerY, 200, 200);
     
     // lauri: updateCord(timeNow);
     

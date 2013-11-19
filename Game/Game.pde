@@ -42,7 +42,7 @@ void draw(){
 }
 void mousePressed(){
   if(mouseY < 500){
-    new SnowBall(200, 200, gameEngine).throwBallto(mouseX, mouseY, runningTime);
+    new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
   }
 }
 void mouseDragged(){
