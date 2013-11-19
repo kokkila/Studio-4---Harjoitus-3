@@ -20,8 +20,8 @@ EndScreen endScreen;
 
 void setup(){
   lives = 3;
-  windowSizeX = 400;
-  windowSizeY = 700;
+  windowSizeX = 1024;
+  windowSizeY = 600;
   size(windowSizeX, windowSizeY);
   this.gameEngine = new GameEngine(3, this);
   //snowBallPic = loadImage("snowball.png");
@@ -41,12 +41,14 @@ void draw(){
   //Gui.draw()
 }
 void mousePressed(){
-  if(mouseY < 500){
+  if(mouseY < gameEngine.santa.y - gameEngine.santa.height){
     new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
   }
 }
 void mouseDragged(){
-  if(mouseY > 500 && mouseY <= 650 && mouseX < 220 && mouseX > 180){
+  if(mouseY > gameEngine.santa.y - gameEngine.santa.height && mouseY <= gameEngine.santa.y + gameEngine.santa.height
+    && mouseX < gameEngine.santa.x + gameEngine.santa.width && mouseX > gameEngine.santa.x - gameEngine.santa.width){
+    println("Drag Santa");
     gameEngine.santa.startMoving();
   }
   

@@ -1,10 +1,12 @@
 class Creature {
-  int x, y, timeUp, moveTime, timeCreated, currentY;
+  int x, y, timeUp, moveTime, timeCreated;
+  float currentY;
   boolean hasThrown, isHit;
+  Slot slot;
   PImage creatureImage;
   GameEngine gameEngine;
 
-  Creature(int x, int y, int timeUp, int moveTime, int timeCreated, GameEngine gameEngine) { // lisää: määrittele kuvan sijainti parametrina
+  Creature(int x, int y, int timeUp, int moveTime, int timeCreated, PImage creatureImage, Slot slot, GameEngine gameEngine) { // lisää: määrittele kuvan sijainti parametrina
     this.x = x; // haluttu lopullinen kuvan x-koordinaatti, kuvan vasen yläreuna
     this.y = y; // creaturen y-koordinaatti sen ylhäällä ollessa, kuvan vasen yläreuna
     this.currentY = y; // tämänhetkinen y - käytetään creaturen liikkumiseen kummun päälle/taakse
@@ -13,9 +15,10 @@ class Creature {
     this.timeCreated = timeCreated;
     this.hasThrown = false;
     this.isHit = false;
+    this.slot = slot;
     this.gameEngine = gameEngine;
-    this.creatureImage = loadImage("creature.jpg");
-    this.creatureImage.resize(100, 100);
+    this.creatureImage = creatureImage;
+    this.creatureImage.resize(30,70);
 
     //println("UUSI CREATURE LUOTIIN");
   }
@@ -28,11 +31,15 @@ class Creature {
     // this.y riippuu ajasta. nousee -> timeCreated+moveTime, paikallaan timeCreated+moveTime+timeUp, laskee timeCreated+2*moveTime+timeUp
     // oletus: display-metodia kutsutaan heti, kun creature luotu. eli alussa timeNow = this.timeCreated. muuten pitää muuttaa timeCreated siihen, kun ukkelia aletaan nostaa.
 
-    if (timeNow <= this.timeCreated+this.moveTime) this.riseUp(); // tarkistetaan, onko ukkelin aika nousta
+    if (timeNow <= this.timeCreated+this.moveTime) this.riseUp(timeNow); // tarkistetaan, onko ukkelin aika nousta
 
-    else if (timeNow > this.timeCreated+this.moveTime+this.timeUp && timeNow <= this.timeCreated+(2*this.moveTime)+this.timeUp && !this.isHit) this.goDown(); // tarkistetaan, onko ukkelin aika laskeutua OTA HUOMIOON ETTEI ISHIT
-    println("Piirrä Creature: X: " + this.x + ", Y: " + currentY);
-    image(this.creatureImage, this.x, this.currentY);
+    else if (timeNow > this.timeCreated+this.moveTime+this.timeUp && timeNow <= this.timeCreated+(2*this.moveTime)+this.timeUp && !this.isHit) this.goDown(timeNow); // tarkistetaan, onko ukkelin aika laskeutua OTA HUOMIOON ETTEI ISHIT
+    else if(timeNow-timeCreated >= timeUp+2*moveTime){
+      slot.occupied = false;
+      gameEngine.removeCreatures(slot);
+    }
+    //println("Piirrä Creature: X: " + this.x + ", Y: " + currentY);
+    image(this.creatureImage, this.x, (int)this.currentY);
   }
 
   //Atro: Creaturet heittää Santaa
@@ -41,15 +48,19 @@ class Creature {
     this.hasThrown = true;
   }
 
-  void riseUp() {
+  void riseUp(int timeNow) {
 
     // päivitetään currentY:tä jotta pehmeä kuvan liikuttaminen piilosta ylös onnistuu
-    this.currentY = this.currentY+this.creatureImage.height-(this.creatureImage.height/this.moveTime).toInt();
+    //println("RiseUp: ");
+    //this.currentY = this.currentY-(((float)this.creatureImage.height)/this.moveTime);
+    this.currentY = this.y-(((timeNow-this.timeCreated)*this.creatureImage.height)/this.moveTime);
   }
 
-  void goDown() {
+  void goDown(int timeNow) {
+    //println("GoDown");
     // päivitetään currentY:tä jotta pehmeä kuvan liikuttaminen ylhäältä piiloon onnistuu
-    this.currentY = this.currentY+(this.creatureImage.height/this.moveTime).toInt();
+    //this.currentY = this.currentY+(this.creatureImage.height/this.moveTime);
+    this.currentY = this.y-this.creatureImage.height+(((timeNow-this.timeCreated-this.timeUp-this.moveTime)*this.creatureImage.height)/this.moveTime);
   }
 
   boolean checkHit(int x, int y) {  // tarkistetaan, osuiko annettulla (x,y)-koordinaattiparilla tähän creaturen. = hitbox

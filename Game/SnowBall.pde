@@ -34,7 +34,7 @@ class SnowBall {
 
   void display() {
     image(this.ballPic, this.x, this.y);
-    println("snowball x: " + this.x + "  y :" + this.y);
+    //println("snowball x: " + this.x + "  y :" + this.y);
   }
 
  
@@ -78,7 +78,7 @@ class SnowBall {
     if ((currentTime-this.startTime)>= this.distance) {
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
       if (c.checkHit((int)(this.x+(this.size/2)), (int)(this.y+(this.size)/2))) {
-        gameEngine.removeCreatures(c);
+        gameEngine.removeCreatures(c.slot);
         this.moving = false;
         this.Dx = 0;
         this.Dy = 0;

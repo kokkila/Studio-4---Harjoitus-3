@@ -1,6 +1,6 @@
 class Santa {
   boolean visible;
-  int x, y;
+  int x, y, height, width;
   int upY, downY;
   PImage santaImage;
   // time in millis from down to up/up to down
@@ -16,7 +16,10 @@ class Santa {
     this.upY = y;
     this.downY = downY;
     this.timeLastMove = 0;
-    this.santaImage = loadImage("santa.jpg");
+    this.santaImage = loadImage("santa.png");
+    this.width = 50;
+    this.height = 100;
+    this.santaImage.resize(width, height);
   }
 
   //
