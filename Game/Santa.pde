@@ -16,7 +16,7 @@ class Santa {
     this.upY = y;
     this.downY = downY;
     this.timeLastMove = 0;
-    this.santaImage = loadImage("santa.png");
+    this.santaImage = loadImage("santa.jpg");
   }
 
   //
@@ -120,11 +120,13 @@ class Santa {
   //      }
 
 
-  void display(boolean wasPressed, int y, int x) {
+  void display() {
+    image(santaImage, x, y+fromCornerY);
+    
     // lauri: updateCord(timeNow);
-
-    fill(255, 0, 0);
-    rectMode(CORNER);
+    
+    //fill(255, 0, 0);
+    //rectMode(CORNER);
     //  if (moving) {
     //    //println("drawMoving");
     //    rect(this.x, this.y+50, 40, 100);

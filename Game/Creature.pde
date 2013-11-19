@@ -2,7 +2,7 @@
 
 
 class Creature{
-  int x, y, timeUp, moveTime, timeCreated;
+  int x, y, timeUp, moveTime, timeCreated, currentY;
   boolean hasThrown;
   PImage creatureImage;
   GameEngine gameEngine;
@@ -16,7 +16,7 @@ class Creature{
     this.timeCreated = timeCreated;
     this.hasThrown = false;
     this.gameEngine = gameEngine;
-    this.creatureImage = loadImage("---TIEDOSTONNIMI TÄHÄN---");
+    this.creatureImage = loadImage("creature.jpg");
     println("UUSI CREATURE LUOTIIN");
   }
 
@@ -26,11 +26,14 @@ class Creature{
   
     if (timeNow <= this.timeCreated+this.moveTime) this.riseUp(); // tarkistetaan, onko ukkelin aika nousta
     else if (timeNow > this.timeCreated+this.moveTime+this.timeUp && timeNow <= this.timeCreated+(2*this.moveTime)+this.timeUp) this.goDown(); // tarkistetaan, onko ukkelin aika laskeutua
+    //Atro: Tää itse piirto oli unohtunut, joten lisäsin sen
+    println("Piirrä Creature: X: " + this.x + ", Y: " + currentY);
+    image(this.creatureImage, this.x, this.currentY);
   }
 
   //Atro: Creaturet heittää Santaa
   void throwSnowBall(Santa santa, int timeThrown) {   // luo uuden lumipallo-olion, joka lähtee kohti creaturea
-    new SnowBall(x, y, 1, this.gameEngine).throwBallto(x, y, timeThrown); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
+    new SnowBall(x, y, this.gameEngine).throwBallto(x, y, timeThrown); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
     this.hasThrown = true;
   }
   

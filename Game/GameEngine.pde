@@ -22,10 +22,11 @@ class GameEngine{
     this.game = game;
     
     //Santalle annettava myös alhalla olon koordinaatti int downY
-    this.santa = new Santa(180, 500);
+    this.santa = new Santa(180, 500, 550);
     snowBalls = new ArrayList<SnowBall>();
     creaturesMap = new HashMap <Slot, Creature>();
     initializeSlots();
+    this.gui = new GUI(this);
   }
   
   void initializeSlots(){
@@ -43,11 +44,12 @@ class GameEngine{
     //checkCollisions();
     generateCreatures(runningTime);
     generateSnowBalls(runningTime);
-    //gui.draw();
-    for (SnowBall sb: snowBalls){
+    santa.updateCord(runningTime);
+    gui.display();
+    /*for (SnowBall sb: snowBalls){
       sb.display();
     }
-    santa.display(mousePressed, mouseY, mouseX);
+    santa.display(mousePressed, mouseY, mouseX);*/
   }
   
   public void moveSnowBalls(int runningTime){

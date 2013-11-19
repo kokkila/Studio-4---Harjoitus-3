@@ -28,13 +28,12 @@ class SnowBall {
     this.timeConverter = 3;
     this.gameEngine = gameEngine;
     this.ballPic=loadImage("snowball.png");
+    gameEngine.addSnowBalls(this);
+    //println("Uusi pallo luotiin");
   }
 
   void display() {
     image(this.ballPic, this.x, this.y);
-    this.gameEngine = gameEngine;
-    println("Uusi pallo luotiin");
-    gameEngine.addSnowBalls(this);
   }
 
  
@@ -75,7 +74,7 @@ class SnowBall {
     // jos pallo lentänyt vaadittavan ajan
     if ((currentTime-this.startTime)>= this.distance) {
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
-      if (c.isHere((int)(this.x+(this.size/2)), (int)(this.y+(this.size)/2))) {
+      if (c.checkHit((int)(this.x+(this.size/2)), (int)(this.y+(this.size)/2))) {
         gameEngine.removeCreatures(c);
         this.moving = false;
         this.Dx = 0;

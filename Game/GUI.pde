@@ -2,12 +2,24 @@
 class GUI{
   
   GameEngine gameEngine;
+  PImage backgroundImage;
   
   public GUI(GameEngine gameEngine){
-    
+    this.gameEngine = gameEngine;
+    this.backgroundImage = loadImage("pohja3.png");
   }
-  draw(){
+  public void display(){
   // piirtää taustan, takaCreaturet, takaKinos, etuCreaturet, etuKinos, Lumipallot, Santa sekä menun
+    image(backgroundImage, 0, 0);
+    for (Creature c : gameEngine.creaturesMap.values()) {
+      if (c != null){
+        c.display(gameEngine.game.runningTime);// ...
+      }
+    }
+    for (SnowBall sb : gameEngine.snowBalls){
+      sb.display();
+    }
+    gameEngine.santa.display();
   
   }
 }
