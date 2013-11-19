@@ -15,7 +15,6 @@ class Creature{
     this.isHit = false;
     this.gameEngine = gameEngine;
     this.creatureImage = loadImage("creature.jpg");
-    this.creatureImage.resize(100,100);
     println("UUSI CREATURE LUOTIIN");
   }
 
@@ -28,7 +27,7 @@ class Creature{
     // oletus: display-metodia kutsutaan heti, kun creature luotu. eli alussa timeNow = this.timeCreated. muuten pitää muuttaa timeCreated siihen, kun ukkelia aletaan nostaa.
   
     if (timeNow <= this.timeCreated+this.moveTime) this.riseUp(); // tarkistetaan, onko ukkelin aika nousta
-    else if (timeNow > this.timeCreated+this.moveTime+this.timeUp && timeNow <= this.timeCreated+(2*this.moveTime)+this.timeUp) this.goDown(); // tarkistetaan, onko ukkelin aika laskeutua OTA HUOMIOON ETTEI ISHIT
+    else if (timeNow > this.timeCreated+this.moveTime+this.timeUp && timeNow <= this.timeCreated+(2*this.moveTime)+this.timeUp && !this.isHit) this.goDown(); // tarkistetaan, onko ukkelin aika laskeutua OTA HUOMIOON ETTEI ISHIT
     println("Piirrä Creature: X: " + this.x + ", Y: " + currentY);
     image(this.creatureImage, this.x, this.currentY);
   }
