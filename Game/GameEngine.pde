@@ -44,7 +44,7 @@ class GameEngine {
   void updateGame(int runningTime) {
     //println("UpdateGame: " + runningTime);
     moveSnowBalls(runningTime);
-    //checkCollisions();
+    checkCollisions();
     generateCreatures(runningTime);
     generateSnowBalls(runningTime);
     santa.updateCord(runningTime);
@@ -63,10 +63,12 @@ class GameEngine {
 
   public void checkCollisions() {
     for (SnowBall sb: snowBalls) {
-      for (Creature c: creatures) {
-        sb.checkCollision(c, this.runningTime);
-        //sb.checkCollision(santa);
+      for (Creature c : gameEngine.creaturesMap.values()) {
+        if (c != null) {
+          sb.checkCollision(c, this.runningTime);// ...
+        }
       }
+      sb.checkCollision(santa, this.runningTime);
     }
   }
 
@@ -79,7 +81,7 @@ class GameEngine {
       if (creaturesMap.get(slot) == null) {
         if (rand > tmpTime) {
           int randX = (int)(100*Math.random()-50);
-          println("tmpTime: " + tmpTime + ", rand: " + rand);
+          //println("tmpTime: " + tmpTime + ", rand: " + rand);
           creaturesMap.put(slot, new Creature(slot.x + randX, slot.y, 3000, 1500, runningTime, randomCreatureImage(), slot, this));
         }
       }
@@ -146,8 +148,6 @@ class GameEngine {
 
   public void removeCreatures(Slot s) {
     // tämän lisättävä myös pisteitä oikean verran, koska snowBall kutsuu tätä kun osuu T. lauri
-    println(s);
-    println(creatures);
     creaturesMap.put(s, null);
   }
 }

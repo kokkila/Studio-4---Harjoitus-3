@@ -79,6 +79,7 @@ class SnowBall {
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
       if (c.checkHit((int)(this.x+(this.size/2)), (int)(this.y+(this.size)/2))) {
         gameEngine.removeCreatures(c.slot);
+        println("CREATUREEN OSUI!!!!!");
         this.moving = false;
         this.Dx = 0;
         this.Dy = 0;
@@ -94,6 +95,7 @@ class SnowBall {
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
       if(santa.visible){
+       println("SANTAAAN OSUI!!!!!!!");
        gameEngine.substractLives(1);
        this.moving = false;
        this.Dx = 0;
