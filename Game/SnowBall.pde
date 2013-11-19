@@ -34,6 +34,7 @@ class SnowBall {
 
   void display() {
     image(this.ballPic, this.x, this.y);
+    println("snowball x: " + this.x + "  y :" + this.y);
   }
 
  
@@ -55,8 +56,10 @@ class SnowBall {
 
   // mihin pallo heitetään, ja lasketaan kuinka kaukana millisekunteina kohde on 
   void throwBallto(int x, int y, int currentTime) {
+              println("Heita to    x: " + x + "  y: " +y);
     this.Dx = x-this.x;
     this.Dy = y-this.y;
+    println("Dx:" + this.Dx + "  Dy: " + this.Dy);
     this.startTime = currentTime;
     //etäisyys millisekunteina eli kauan lento kestää
     this.distance = abs(Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter));

@@ -88,6 +88,7 @@ class GameEngine{
       if (value != null){
         Creature creature = (Creature)value;
         if (rand > tmpTime && !creature.hasThrown()){
+
           creature.throwSnowBall(this.santa, this.runningTime);
         }
       }  
