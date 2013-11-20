@@ -4,7 +4,8 @@ int runningTime;
 int windowSizeX, windowSizeY;
 int points, lives;
 int start_x1, start_x2, start_y1, start_y2;
-boolean started, finished;
+int instructions_x1, instructions_x2, instructions_y1, instructions_y2;
+boolean started, finished, instructions;
 SnowBall snowball;
 Santa santa;
 ArrayList<SnowBall> snowBalls;
@@ -18,22 +19,29 @@ GameEngine gameEngine;
 GUI gui;
 StartScreen startScreen;
 EndScreen endScreen;
+InstructionScreen instructionScreen;
 
 void setup(){
-  lives = 3;
+  this.lives = 3;
   this.started = false;
+  this.instructions = false;
+  this.finished = false;
   this.start_x1 = 480;
   this.start_x2 = 685;
   this.start_y1 = 355;
   this.start_y2 = 475;
-  windowSizeX = 1024;
-  windowSizeY = 600;
+  this.instructions_x1 = 740;
+  this.instructions_x2 = 925;
+  this.instructions_y1 = 275;
+  this.instructions_y2 = 400;
+  this.windowSizeX = 1024;
+  this.windowSizeY = 600;
   size(windowSizeX, windowSizeY);
   this.gameEngine = new GameEngine(3, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
-  startScreen.draw();
+  this.instructionScreen = new InstructionScreen(this);
 }
 
 
@@ -46,20 +54,31 @@ void draw(){
     }
     gameEngine.updateGame(runningTime);
     //Gui.draw()
+  } else if (this.instructions) {
+    this.instructionScreen.draw();
+  } else {
+    this.startScreen.draw();
   }
 }
+
 void mousePressed(){
   if (this.started) {
     if (mouseY < gameEngine.santa.y - gameEngine.santa.height) {
       new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
     }
   } else {
-    if (mouseX > this.start_x1 && mouseX < this.start_x2 && mouseY > this.start_y1 && mouseY < this.start_y2) {
+    if (mouseX > this.start_x1 && mouseX < this.start_x2 && mouseY > this.start_y1 && mouseY < this.start_y2 && this.instructions == false) {
       this.started = true;
-      println("menee tanne");
+    }
+    if (mouseX > this.instructions_x1 && mouseX < this.instructions_x2 && mouseY > this.instructions_y1 && mouseY < this.instructions_y2) {
+      this.instructions = true;
+    }
+    if (mouseX > 954 && mouseY < 70 && this.instructions == true) {
+      this.instructions = false;
     }
   }
 }
+
 void mouseDragged(){
   if(mouseY > gameEngine.santa.y - gameEngine.santa.height && mouseY <= gameEngine.santa.y + gameEngine.santa.height
     && mouseX < gameEngine.santa.x + gameEngine.santa.width && mouseX > gameEngine.santa.x - gameEngine.santa.width){
