@@ -20,7 +20,6 @@ class Santa {
     this.santaImage = loadImage("santa.png");
     this.width = 50;
     this.height = 100;
-    this.santaImage.resize(width, height);
   }
 
   //
@@ -144,7 +143,7 @@ class Santa {
 
 
   void display() {
-    image(santaImage, x, y+fromCornerY, 200, 200);
+    image(santaImage, x, y+fromCornerY);
     //image(santaImage, x, currentY+height/2, 200, 200);
     
     // lauri: updateCord(timeNow);
