@@ -65,7 +65,7 @@ class Creature {
 
   boolean checkHit(int x, int y) {  // tarkistetaan, osuiko annettulla (x,y)-koordinaattiparilla tähän creaturen. = hitbox
     // logiikka hitboxin suurenemisen/pienenemisen kannalta animaation aikana: käytetään kuvan currentY:tä hyväksi
-    println("CheckHit: BallX: " + x + ", BallY: " + y + ", thisX: " + this.x + "-" + (this.x+this.creatureImage.width) + ", thisY: " + this.currentY + "-" + (this.y+this.creatureImage.height));
+    //println("CheckHit: BallX: " + x + ", BallY: " + y + ", thisX: " + this.x + "-" + (this.x+this.creatureImage.width) + ", thisY: " + this.currentY + "-" + (this.y+this.creatureImage.height));
     if (x >= this.x && x <= this.x+this.creatureImage.width && y >= this.currentY && y <= this.y+this.creatureImage.height) {
       this.isHit = true;
       println("OSUI");
