@@ -77,6 +77,7 @@ class Santa {
       //println("True");
       // time from last time moved
       if (mousePressed) {
+        println("mousePressed");
         this.y = mouseY-fromCornerY;
       }
       else {

@@ -21,7 +21,7 @@ class SnowBall {
     this.x = startX;
     this.y = startY;
     this.topSize = 50;
-    this.sizeSpeed = 0.05;
+    this.sizeSpeed = 0.5;
     this.size = Math.round(this.sizeSpeed*this.y)+this.topSize;
     this.orgX = startX;
     this.orgY = startY;
@@ -54,8 +54,8 @@ class SnowBall {
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
       println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
-      println("uusi koko: " + Math.round(this.sizeSpeed*this.y) + this.topSize);
-      this.setSize(Math.round(this.sizeSpeed*this.y) + this.topSize);
+      println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
+      this.setSize(Math.round(this.sizeSpeed*((this.y-this.Dy)/this.Dy) + this.topSize));
       println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
     }
   }
