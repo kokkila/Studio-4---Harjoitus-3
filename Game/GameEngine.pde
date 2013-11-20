@@ -176,6 +176,7 @@ class GameEngine {
     for (SnowBall sb : snowBallsToRemove){
       snowBalls.remove(sb);
     }
+    snowBallsToRemove.clear();
   }
 
   public void removeCreatures(Slot s) {

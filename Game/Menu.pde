@@ -20,5 +20,7 @@ class Menu {
       image(heart_image, this.x + (i*30), this.y);
       i += 1;
     }
+    //String points = gameEngine.getPoints().toString();
+    text(gameEngine.getPoints(), 900, 20);
   }
 }

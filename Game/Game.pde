@@ -42,7 +42,7 @@ void setup() {
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
-  this.endScreen = new EndScreen();
+  this.endScreen = new EndScreen(this.gameEngine);
   this.instructionScreen = new InstructionScreen(this);
   this.menu = new Menu(this.gameEngine);
 }
