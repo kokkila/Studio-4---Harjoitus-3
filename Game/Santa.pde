@@ -7,6 +7,7 @@ class Santa {
   float risingTime;
   int movingStartTime;
   int fromCornerY;
+  int currentY;
   int timeLastMove;
 
 
@@ -61,7 +62,8 @@ class Santa {
   // mouse start moving
   // tarkistaa kuinka kaukaa kulmasta kuvasta tartuttiin 
   void startMoving() {
-    fromCornerY = mouseY-this.y;
+    fromCornerY = mouseY-this.y + this.height/2;
+    //currentY = mouseY;
   }
 
 
@@ -71,7 +73,9 @@ class Santa {
   // mouseDown = true == sormi alhaalle
   // kutsu tätä joka päivityksessä
   void updateCord(int timeNow) {
+    println("UpdateCord: thisY: " + this.y + ", upY: " + upY + ", downY: " + downY + ", thisY: " + this.y);
     if (this.y <= upY && downY <= this.y) {
+      //println("True");
       // time from last time moved
       if (mousePressed) {
         this.y = mouseY-fromCornerY;
@@ -95,6 +99,22 @@ class Santa {
     // tarkistetaan ollaanko keskirajan ala vai yläpuolella
     this.checkVisibility();
   }
+  
+  /*void updateCord(int timeNow){
+    if (mousePressed){
+      if (mouseY > y && mouseY < y + height){
+        currentY = mouseY;
+      }
+    }
+    else{
+      if (currentY < downY){
+        currentY = y;
+      }
+      else{
+        currentY = downY;
+      }
+    }
+  }*/
 
   void checkVisibility() {
     if (this.y < ((downY-upY)/2)+upY) {
@@ -125,6 +145,7 @@ class Santa {
 
   void display() {
     image(santaImage, x, y+fromCornerY, 200, 200);
+    //image(santaImage, x, currentY+height/2, 200, 200);
     
     // lauri: updateCord(timeNow);
     

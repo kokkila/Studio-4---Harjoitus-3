@@ -80,9 +80,9 @@ void mousePressed(){
 }
 
 void mouseDragged(){
-  if(mouseY > gameEngine.santa.y - gameEngine.santa.height && mouseY <= gameEngine.santa.y + gameEngine.santa.height
+  if(mouseY > gameEngine.santa.y - gameEngine.santa.height/2 && mouseY <= gameEngine.santa.y + gameEngine.santa.height/2
     && mouseX < gameEngine.santa.x + gameEngine.santa.width && mouseX > gameEngine.santa.x - gameEngine.santa.width){
-    println("Drag Santa");
+    //println("Drag Santa");
     gameEngine.santa.startMoving();
   }
   

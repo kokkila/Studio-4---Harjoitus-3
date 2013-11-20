@@ -26,7 +26,7 @@ class GameEngine {
     this.game = game;
 
     //Santalle annettava myös alhalla olon koordinaatti int downY
-    this.santa = new Santa(500, 550, 650);
+    this.santa = new Santa(500, 550, 600);
     snowBalls = new ArrayList<SnowBall>();
     creaturesMap = new HashMap <Slot, Creature>();
     initializeSlots();
@@ -34,7 +34,7 @@ class GameEngine {
   }
 
   void initializeSlots() {
-    creaturesMap.put(new Slot(50, 400, true), null);
+    //creaturesMap.put(new Slot(50, 400, true), null);
     //creaturesMap.put(new Slot(250, 400, true), null);
     //creaturesMap.put(new Slot(750, 430, true), null);
     //creaturesMap.put(new Slot(650, 290, false), null);
@@ -50,7 +50,7 @@ class GameEngine {
     moveSnowBalls(runningTime);
     checkCollisions();
     generateCreatures(runningTime);
-    //generateSnowBalls(runningTime);
+    generateSnowBalls(runningTime);
     santa.updateCord(runningTime);
     gui.display();
     /*for (SnowBall sb: snowBalls){
