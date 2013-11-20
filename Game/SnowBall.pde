@@ -7,6 +7,7 @@ class SnowBall {
   int orgX, orgY;
   int Dx, Dy, distance;
   int startTime;
+  int horizon;
   float size, topSize;
 
   // nopeudet jolla palloa siirretään: pineneminen ja siirtyminen xy
@@ -20,9 +21,9 @@ class SnowBall {
   SnowBall(int startX, int startY, GameEngine gameEngine) {
     this.x = startX;
     this.y = startY;
-    this.topSize = 60;
-    this.sizeSpeed = 0.001;
-    this.size = Math.round(this.sizeSpeed*this.y)+this.topSize;
+    this.sizeSpeed = 0.1;
+    this.horizon = 180;
+    this.size = Math.round(this.sizeSpeed*this.y);
     this.orgX = startX;
     this.orgY = startY;
     this.timeConverter = 3;
@@ -55,9 +56,7 @@ class SnowBall {
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
       println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
       println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
-      if (this.Dy < 0) {
-        this.setSize(this.topSize+(0.008*this.distance)-Math.round(this.topSize*(timePassed/this.distance)));
-      }
+      this.setSize(Math.round((this.y-this.horizon)*this.sizeSpeed));      
       println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
     }
   }
@@ -68,6 +67,9 @@ class SnowBall {
     this.startTime = currentTime;
     this.Dx = x-this.x;
     this.Dy = y-this.y;
+    if(y<this.horizon){
+     this.Dy = this.horizon-this.y; 
+    }
     //println("this.x:  " + this.x + "this.y" + this.y);
     //println("Dx:" + this.Dx + "  Dy: " + this.Dy);
     //etäisyys millisekunteina eli kauan lento kestää
