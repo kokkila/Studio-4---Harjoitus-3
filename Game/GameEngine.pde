@@ -27,7 +27,7 @@ class GameEngine {
     this.game = game;
 
     //Santalle annettava myös alhalla olon koordinaatti int downY
-    this.santa = new Santa(500, 550, 600);
+    this.santa = new Santa(500, 600, 700);
     snowBalls = new ArrayList<SnowBall>();
     snowBallsToRemove = new ArrayList<SnowBall>();
     creaturesMap = new HashMap <Slot, Creature>();

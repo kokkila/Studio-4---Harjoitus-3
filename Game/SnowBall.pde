@@ -48,9 +48,6 @@ class SnowBall {
     //println("current:  " + currentTime + " start: " + startTime + " == timePassed: "); 
     if (moving) {
       float timePassed = currentTime - startTime;
-      if (this.Dx == 0 || this.Dy== 0) {
-        println("ERROR: SnowBall Dx or Dy is 0!!");
-      }
       //println("prosentteja:" + (timePassed/this.distance) + "   timePassed:  " + timePassed + "  thisdistance:  " + this.distance);
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
@@ -58,7 +55,7 @@ class SnowBall {
       //println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
       this.setSize(Math.round((this.y-this.horizon)*this.sizeSpeed));      
       //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
-      if(this.y<this.horizon){
+      if(this.y<this.horizon || (timePassed/this.distance)>1){
           destroyBall(); 
       }
     }
@@ -76,9 +73,6 @@ class SnowBall {
     this.distance = abs(Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter));
     //println("distance:" + this.distance);
     this.moving = true;
-    if (gameEngine.getSanta().isHere(x, y)) {
-      this.toSanta = true;
-    }
   }
 
   //Tarkistaa osuuko pallo otukseen c
@@ -109,7 +103,8 @@ class SnowBall {
   // POISTA ITSESTI LISTASTA
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
-      if (santa.visible && this.moving && this.orgY<santa.upY) {
+      println("santa visi: " + santa.visible);
+      if (santa.visible && this.orgY<santa.upY) {
         this.gameEngine.substractLives(1);
         destroyBall();
       }
