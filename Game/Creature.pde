@@ -18,7 +18,7 @@ class Creature {
     this.slot = slot;
     this.gameEngine = gameEngine;
     this.creatureImage = creatureImage;
-    this.creatureImage.resize(30,70);
+    this.creatureImage.resize(30, 70);
 
     //println("UUSI CREATURE LUOTIIN");
   }
@@ -31,10 +31,14 @@ class Creature {
     // this.y riippuu ajasta. nousee -> timeCreated+moveTime, paikallaan timeCreated+moveTime+timeUp, laskee timeCreated+2*moveTime+timeUp
     // oletus: display-metodia kutsutaan heti, kun creature luotu. eli alussa timeNow = this.timeCreated. muuten pitää muuttaa timeCreated siihen, kun ukkelia aletaan nostaa.
 
-    if (timeNow <= this.timeCreated+this.moveTime) this.riseUp(timeNow); // tarkistetaan, onko ukkelin aika nousta
+    if (timeNow <= this.timeCreated+this.moveTime) {
+      this.riseUp(timeNow);
+    }  // tarkistetaan, onko ukkelin aika nousta
 
-    else if (timeNow > this.timeCreated+this.moveTime+this.timeUp && timeNow <= this.timeCreated+(2*this.moveTime)+this.timeUp && !this.isHit) this.goDown(timeNow); // tarkistetaan, onko ukkelin aika laskeutua OTA HUOMIOON ETTEI ISHIT
-    else if(timeNow-timeCreated >= timeUp+2*moveTime){
+    else if (timeNow > this.timeCreated+this.moveTime+this.timeUp && timeNow <= this.timeCreated+(2*this.moveTime)+this.timeUp && !this.isHit) {
+      this.goDown(timeNow);
+    }  // tarkistetaan, onko ukkelin aika laskeutua OTA HUOMIOON ETTEI ISHIT
+    else if(timeNow-timeCreated >= timeUp+2*moveTime) {
       slot.occupied = false;
       gameEngine.removeCreatures(slot);
     }
