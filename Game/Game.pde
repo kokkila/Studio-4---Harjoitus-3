@@ -3,6 +3,7 @@ PImage snowBallPic;
 int runningTime;
 int windowSizeX, windowSizeY;
 int points, lives;
+int start_x1, start_x2, start_y1, start_y2;
 boolean started, finished;
 SnowBall snowball;
 Santa santa;
@@ -21,13 +22,17 @@ EndScreen endScreen;
 void setup(){
   lives = 3;
   this.started = false;
+  this.start_x1 = 480;
+  this.start_x2 = 685;
+  this.start_y1 = 355;
+  this.start_y2 = 475;
   windowSizeX = 1024;
   windowSizeY = 600;
   size(windowSizeX, windowSizeY);
   this.gameEngine = new GameEngine(3, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
-  this.startScreen = new StartScreen();
+  this.startScreen = new StartScreen(this);
   startScreen.draw();
 }
 
@@ -35,17 +40,24 @@ void setup(){
 void draw(){
   if (this.started) {
     background(0);
-  this.runningTime = millis();
-  if(!mousePressed){
-    //gameEngine.santa.moving = false;
-  }
-  gameEngine.updateGame(runningTime);
-  //Gui.draw()
+    this.runningTime = millis();
+    if(!mousePressed){
+      //gameEngine.santa.moving = false;
+    }
+    gameEngine.updateGame(runningTime);
+    //Gui.draw()
   }
 }
 void mousePressed(){
-  if(mouseY < gameEngine.santa.y - gameEngine.santa.height){
-    new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
+  if (this.started) {
+    if (mouseY < gameEngine.santa.y - gameEngine.santa.height) {
+      new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
+    }
+  } else {
+    if (mouseX > this.start_x1 && mouseX < this.start_x2 && mouseY > this.start_y1 && mouseY < this.start_y2) {
+      this.started = true;
+      println("menee tanne");
+    }
   }
 }
 void mouseDragged(){
