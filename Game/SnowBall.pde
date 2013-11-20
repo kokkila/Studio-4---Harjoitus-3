@@ -20,8 +20,8 @@ class SnowBall {
   SnowBall(int startX, int startY, GameEngine gameEngine) {
     this.x = startX;
     this.y = startY;
-    this.topSize = 50;
-    this.sizeSpeed = 0.5;
+    this.topSize = 60;
+    this.sizeSpeed = 0.001;
     this.size = Math.round(this.sizeSpeed*this.y)+this.topSize;
     this.orgX = startX;
     this.orgY = startY;
@@ -39,7 +39,7 @@ class SnowBall {
     //println("snowball x: " + this.x + "  y :" + this.y);
   }
 
- 
+
 
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
   // Atro: Pallot ei liiku
@@ -55,7 +55,9 @@ class SnowBall {
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
       println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
       println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
-      this.setSize(Math.round(this.sizeSpeed*((this.y-this.Dy)/this.Dy) + this.topSize));
+      if (this.Dy < 0) {
+        this.setSize(this.topSize+(0.008*this.distance)-Math.round(this.topSize*(timePassed/this.distance)));
+      }
       println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
     }
   }
@@ -80,17 +82,18 @@ class SnowBall {
   //Tarkistaa osuuko pallo otukseen c
   //Muista huomioida myös etäisyys Santasta
   //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
-  
+
   //POISTA ITSESI LISTASTA
   void checkCollision(Creature c, int currentTime) {  
     // jos pallo lentänyt vaadittavan ajan
     //println("CT - sT: " + (currentTime-this.startTime) + ", d: " + this.distance);
     if ((currentTime-this.startTime)>= this.distance) {
       //println("TRUE");
-      
+
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
       if (c.checkHit(this.x, this.y)) {
         gameEngine.removeCreatures(c.slot);
+        gameEngine.addPoints(10);
         println("CREATUREEN OSUI!!!!!");
         this.moving = false;
         this.Dx = 0;
@@ -108,12 +111,12 @@ class SnowBall {
   // POISTA ITSESTI LISTASTA
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
-      if(santa.visible){
-       this.gameEngine.substractLives(1);
-       this.moving = false;
-       this.Dx = 0;
-       this.Dy = 0;
-       //this.gameEngine.removeSnowBalls(this);
+      if (santa.visible) {
+        this.gameEngine.substractLives(1);
+        this.moving = false;
+        this.Dx = 0;
+        this.Dy = 0;
+        //this.gameEngine.removeSnowBalls(this);
       }
     }
   }

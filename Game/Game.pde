@@ -42,13 +42,18 @@ void setup() {
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
+  this.endScreen = new EndScreen();
   this.instructionScreen = new InstructionScreen(this);
-  this.menu = new Menu(this);
+  this.menu = new Menu(this.gameEngine);
 }
 
 
 void draw(){
-  if (this.started) {
+  if(this.finished){
+    imageMode(CORNER);
+    this.endScreen.draw();
+  }
+  else if (this.started) {
     background(0);
     this.runningTime = millis();
     if(!mousePressed){

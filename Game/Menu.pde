@@ -1,12 +1,12 @@
 class Menu {
   PImage heart_image;
-  Game game;
+  GameEngine gameEngine;
   int x;
   int y;
   int image_width;
   
-  Menu(Game game) {
-    this.game = game;
+  Menu(GameEngine gameEngine) {
+    this.gameEngine = gameEngine;
     this.heart_image = loadImage("heart.png");
     this.x = 20;
     this.y = 20;
@@ -15,7 +15,7 @@ class Menu {
   
   void draw() {
     int i = 0;
-    int hearts = this.game.getLives();
+    int hearts = this.gameEngine.getLives();
     while (i < hearts) {
       image(heart_image, this.x + (i*30), this.y);
       i += 1;

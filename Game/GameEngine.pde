@@ -53,6 +53,9 @@ class GameEngine {
     generateSnowBalls(runningTime);
     santa.updateCord(runningTime);
     gui.display();
+    if(this.lives<=0){
+     this.game.finished = true; 
+    }
     /*for (SnowBall sb: snowBalls){
      sb.display();
      }
