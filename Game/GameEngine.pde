@@ -1,4 +1,5 @@
 class GameEngine {
+  // onko tämä sama kuin millis()??
   int runningTime;
   int windowSizeX, windowSizeY;
   int points, lives;
@@ -43,6 +44,9 @@ class GameEngine {
 
   void updateGame(int runningTime) {
     //println("UpdateGame: " + runningTime);
+    
+    // Lauri lisäsi tämän, koska ei päivitetty
+    this.runningTime = runningTime;
     moveSnowBalls(runningTime);
     checkCollisions();
     generateCreatures(runningTime);
@@ -95,7 +99,8 @@ class GameEngine {
       if (value != null) {
         Creature creature = (Creature)value;
         if (rand > tmpTime && !creature.hasThrown()) {
-
+          println("millis:" + millis());
+          println("runningTime: " + this.runningTime);
           creature.throwSnowBall(this.santa, this.runningTime);
         }
       }

@@ -21,7 +21,7 @@ class SnowBall {
     this.x = startX;
     this.y = startY;
     this.topSize = 50;
-    this.sizeSpeed = 0.01;
+    this.sizeSpeed = 0.05;
     this.size = Math.round(this.sizeSpeed*this.y)+this.topSize;
     this.orgX = startX;
     this.orgY = startY;
@@ -33,7 +33,9 @@ class SnowBall {
   }
 
   void display() {
-    image(this.ballPic, this.x, this.y);
+    println("x: " + this.x + "y: " + this.y + "this.size: " + this.size);
+    //this.ballPic.resize(Math.round(this.size), Math.round(this.size));
+    image(this.ballPic, this.x, this.y, this.size, this.size);
     //println("snowball x: " + this.x + "  y :" + this.y);
   }
 
@@ -42,25 +44,30 @@ class SnowBall {
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
   // Atro: Pallot ei liiku
   void chanceLoc(int currentTime) {
+    println("current:  " + currentTime + " start: " + startTime + " == timePassed: "); 
     if (moving) {
       float timePassed = currentTime - startTime;
       if (this.Dx == 0 || this.Dy== 0) {
         println("ERROR: SnowBall Dx or Dy is 0!!");
       }
+      //println("prosentteja:" + (timePassed/this.distance) + "   timePassed:  " + timePassed + "  thisdistance:  " + this.distance);
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
-      this.setSize(Math.round(this.sizeSpeed*this.y)+this.topSize);
+      //println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
+      //println("uusi koko: " + Math.round(this.sizeSpeed*this.y) + this.topSize);
+      this.setSize(Math.round(this.sizeSpeed*this.y) + this.topSize);
       //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
     }
   }
 
   // mihin pallo heitetään, ja lasketaan kuinka kaukana millisekunteina kohde on 
   void throwBallto(int x, int y, int currentTime) {
-              println("Heita to    x: " + x + "  y: " +y);
+    //println("Heita to    x: " + x + "  y: " +y);
+    this.startTime = currentTime;
     this.Dx = x-this.x;
     this.Dy = y-this.y;
-    println("Dx:" + this.Dx + "  Dy: " + this.Dy);
-    this.startTime = currentTime;
+    //println("this.x:  " + this.x + "this.y" + this.y);
+    //println("Dx:" + this.Dx + "  Dy: " + this.Dy);
     //etäisyys millisekunteina eli kauan lento kestää
     this.distance = abs(Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter));
     //println("distance:" + this.distance);
@@ -79,13 +86,13 @@ class SnowBall {
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
       if (c.checkHit((int)(this.x+(this.size/2)), (int)(this.y+(this.size)/2))) {
         gameEngine.removeCreatures(c.slot);
-        println("CREATUREEN OSUI!!!!!");
+        //println("CREATUREEN OSUI!!!!!");
         this.moving = false;
         this.Dx = 0;
         this.Dy = 0;
       }
       else {
-        println("Ball missed all targets");
+        //println("Ball missed all targets");
       }
     }
   }
@@ -95,7 +102,7 @@ class SnowBall {
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
       if(santa.visible){
-       println("SANTAAAN OSUI!!!!!!!");
+       //println("SANTAAAN OSUI!!!!!!!");
        gameEngine.substractLives(1);
        this.moving = false;
        this.Dx = 0;
