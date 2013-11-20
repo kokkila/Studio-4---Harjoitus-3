@@ -18,8 +18,6 @@ class Santa {
     this.downY = downY;
     this.timeLastMove = 0;
     this.santaImage = loadImage("santa.png");
-    this.width = 50;
-    this.height = 100;
   }
 
   //
@@ -72,7 +70,7 @@ class Santa {
   // mouseDown = true == sormi alhaalle
   // kutsu tätä joka päivityksessä
   void updateCord(int timeNow) {
-    println("UpdateCord: thisY: " + this.y + ", upY: " + upY + ", downY: " + downY + ", thisY: " + this.y);
+    //println("UpdateCord: thisY: " + this.y + ", upY: " + upY + ", downY: " + downY + ", thisY: " + this.y);
     if (this.y <= upY && downY <= this.y) {
       //println("True");
       // time from last time moved
@@ -144,6 +142,7 @@ class Santa {
 
   void display() {
     image(santaImage, x, y+fromCornerY);
+
     //image(santaImage, x, currentY+height/2, 200, 200);
     
     // lauri: updateCord(timeNow);
