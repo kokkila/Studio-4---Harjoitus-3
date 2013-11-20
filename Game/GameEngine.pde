@@ -34,11 +34,11 @@ class GameEngine {
   }
 
   void initializeSlots() {
-    //creaturesMap.put(new Slot(50, 400, true), null);
-    //creaturesMap.put(new Slot(250, 400, true), null);
-    //creaturesMap.put(new Slot(750, 430, true), null);
-    //creaturesMap.put(new Slot(650, 290, false), null);
-    //creaturesMap.put(new Slot(850, 290, false), null);
+    creaturesMap.put(new Slot(50, 400, true), null);
+    creaturesMap.put(new Slot(250, 400, true), null);
+    creaturesMap.put(new Slot(750, 430, true), null);
+    creaturesMap.put(new Slot(650, 290, false), null);
+    creaturesMap.put(new Slot(850, 290, false), null);
   }
 
 
