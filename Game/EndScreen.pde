@@ -10,6 +10,7 @@ class EndScreen {
   
   void draw() {
     image(endscreen_image, 0, 0);
-    text(gameEngine.getPoints(), 600, 500);
+    fill(0);
+    text(gameEngine.getPoints(), 600, 400);
   }
 }

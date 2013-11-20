@@ -38,6 +38,7 @@ void setup() {
   this.windowSizeX = 1024;
   this.windowSizeY = 600;
   size(1024, 600);
+  orientation(LANDSCAPE);
   this.gameEngine = new GameEngine(this.lives, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
@@ -73,7 +74,9 @@ void draw(){
 void mousePressed(){
   if (this.started) {
     if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x - (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x + (gameEngine.santa.width/2) < mouseX) {
-      new SnowBall(gameEngine.santa.x+50, gameEngine.santa.y-110, gameEngine).throwBallto(mouseX, mouseY, runningTime);
+      SnowBall sb = new SnowBall(gameEngine.santa.x+50, gameEngine.santa.y-110, gameEngine);
+      sb.throwBallto(mouseX, mouseY, runningTime);
+      gameEngine.addSantaSnowBalls(sb);
     }
   } 
   else {

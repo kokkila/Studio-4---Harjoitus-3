@@ -29,7 +29,7 @@ class SnowBall {
     this.timeConverter = 3;
     this.gameEngine = gameEngine;
     this.ballPic=loadImage("snowball.png");
-    gameEngine.addSnowBalls(this);
+    //gameEngine.addSnowBalls(this);
     //println("Uusi pallo luotiin");
   }
 
@@ -103,7 +103,7 @@ class SnowBall {
   // POISTA ITSESTI LISTASTA
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
-      println("santa visi: " + santa.visible);
+      //println("santa visi: " + santa.visible);
       if (santa.visible && this.orgY<santa.upY) {
         this.gameEngine.substractLives(1);
         destroyBall();
