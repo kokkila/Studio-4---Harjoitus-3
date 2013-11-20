@@ -66,7 +66,7 @@ void draw(){
 
 void mousePressed(){
   if (this.started) {
-    if (mouseY < gameEngine.santa.y - gameEngine.santa.height) {
+    if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2) {
       new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
     }
   } else {
