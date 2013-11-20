@@ -23,7 +23,7 @@ InstructionScreen instructionScreen;
 Menu menu;
 
 void setup() {
-  this.lives = 3;
+  this.lives = 10;
   this.started = false;
   this.instructions = false;
   this.finished = false;
@@ -38,17 +38,22 @@ void setup() {
   this.windowSizeX = 1024;
   this.windowSizeY = 600;
   size(windowSizeX, windowSizeY);
-  this.gameEngine = new GameEngine(3, this);
+  this.gameEngine = new GameEngine(this.lives, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
+  this.endScreen = new EndScreen();
   this.instructionScreen = new InstructionScreen(this);
-  this.menu = new Menu(this);
+  this.menu = new Menu(this.gameEngine);
 }
 
 
 void draw(){
-  if (this.started) {
+  if(this.finished){
+    imageMode(CORNER);
+    this.endScreen.draw();
+  }
+  else if (this.started) {
     background(0);
     this.runningTime = millis();
     if(!mousePressed){
@@ -68,10 +73,6 @@ void mousePressed(){
   if (this.started) {
     if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2) {
       new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
-    }
-  } else if (this.finished) {
-    if (mouseX < 410 && mouseX > 625 && mouseY < 460 && mouseY > 490) {
-      this.started = true;
     }
   } else {
     if (mouseX > this.start_x1 && mouseX < this.start_x2 && mouseY > this.start_y1 && mouseY < this.start_y2 && this.instructions == false) {

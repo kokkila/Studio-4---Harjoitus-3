@@ -43,7 +43,7 @@ class Creature {
       gameEngine.removeCreatures(slot);
     }
     //println("Piirrä Creature: X: " + this.x + ", Y: " + currentY);
-    image(this.creatureImage, this.x, (int)this.currentY);
+    image(this.creatureImage, this.x, (int)this.currentY, this.creatureImage.width, this.creatureImage.height);
   }
 
   //Atro: Creaturet heittää Santaa
