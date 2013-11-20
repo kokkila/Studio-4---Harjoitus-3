@@ -80,6 +80,8 @@ class SnowBall {
   //Tarkistaa osuuko pallo otukseen c
   //Muista huomioida myös etäisyys Santasta
   //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
+  
+  //POISTA ITSESI LISTASTA
   void checkCollision(Creature c, int currentTime) {  
     // jos pallo lentänyt vaadittavan ajan
     if ((currentTime-this.startTime)>= this.distance) {
@@ -99,6 +101,7 @@ class SnowBall {
 
   //Tarkistaa osuuko pallo santaan
   //Tarvittaessa vähentää elämiä
+  // POISTA ITSESTI LISTASTA
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
       if(santa.visible){
