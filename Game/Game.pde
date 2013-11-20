@@ -20,8 +20,9 @@ GUI gui;
 StartScreen startScreen;
 EndScreen endScreen;
 InstructionScreen instructionScreen;
+Menu menu;
 
-void setup(){
+void setup() {
   this.lives = 3;
   this.started = false;
   this.instructions = false;
@@ -42,6 +43,7 @@ void setup(){
   //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
   this.instructionScreen = new InstructionScreen(this);
+  this.menu = new Menu(this);
 }
 
 
@@ -54,6 +56,7 @@ void draw(){
     }
     gameEngine.updateGame(runningTime);
     //Gui.draw()
+    this.menu.draw();
   } else if (this.instructions) {
     this.instructionScreen.draw();
   } else {
@@ -124,4 +127,8 @@ void mouseDragged(){
     println("Ohi");
     gameEngine.santa.moving = false;
   }*/
+}
+
+int getLives() {
+  return this.lives;
 }
