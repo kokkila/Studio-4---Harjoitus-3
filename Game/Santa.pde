@@ -18,6 +18,8 @@ class Santa {
     this.downY = downY;
     this.timeLastMove = 0;
     this.santaImage = loadImage("santa.png");
+    this.width = 150;
+    this.height = 301;
   }
 
   //
@@ -142,7 +144,7 @@ class Santa {
 
 
   void display() {
-    image(santaImage, x, y+fromCornerY);
+    image(santaImage, x, y+fromCornerY,this.width, this.height);
 
     //image(santaImage, x, currentY+height/2, 200, 200);
     
