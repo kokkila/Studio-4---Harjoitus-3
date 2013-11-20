@@ -120,7 +120,7 @@ class SnowBall {
     this.moving = false;
     this.Dx = 0;
     this.Dy = 0;
-    //this.gameEngine.removeSnowBalls(this);
+    this.gameEngine.setSnowBallToBeRemoved(this);
   }
 
   int getX() {

@@ -11,6 +11,7 @@ class GameEngine {
       loadImage("creature_bunny.png"), loadImage("creature_chick.png"), loadImage("creature_ghost.png"), loadImage("creature_reindeer.png"), loadImage("creature_snowman.png"), loadImage("creature_witch.png")
     };
   ArrayList<SnowBall> snowBalls;
+  ArrayList<SnowBall> snowBallsToRemove;
   //ArrayList<Creature> creatures; // Tää varmaan voisi olla sanakirja, tyyliin slot->creature(t)
   HashMap<Slot, Creature> creaturesMap; // EN tiedä yhtään toimiiko tää
   /* Iterointi onnistuu näin
@@ -28,6 +29,7 @@ class GameEngine {
     //Santalle annettava myös alhalla olon koordinaatti int downY
     this.santa = new Santa(500, 550, 600);
     snowBalls = new ArrayList<SnowBall>();
+    snowBallsToRemove = new ArrayList<SnowBall>();
     creaturesMap = new HashMap <Slot, Creature>();
     initializeSlots();
     this.gui = new GUI(this);
@@ -59,6 +61,7 @@ class GameEngine {
     generateCreatures(runningTime);
     generateSnowBalls(runningTime);
     santa.updateCord(runningTime);
+    removeSnowBalls();
     gui.display();
     if(this.lives<=0){
      this.game.finished = true; 
@@ -76,6 +79,16 @@ class GameEngine {
   }
 
   public void checkCollisions() {
+    /*Iterator<SnowBall> it = snowBalls.iterator();
+    while(it.hasNext()){
+      SnowBall sb = it.next();
+      for (Creature c : gameEngine.creaturesMap.values()) {
+        if (c != null) {
+          sb.checkCollision(c, this.runningTime);// ...
+        }
+      }
+      sb.checkCollision(santa, this.runningTime);
+    }*/
     for (SnowBall sb: snowBalls) {
       for (Creature c : gameEngine.creaturesMap.values()) {
         if (c != null) {
@@ -155,8 +168,14 @@ class GameEngine {
     creatures.add(c);
   }
 
-  public void removeSnowBalls(SnowBall sB) {
-    snowBalls.remove(sB);
+  public void setSnowBallToBeRemoved(SnowBall sB) {
+    snowBallsToRemove.add(sB);
+  }
+  
+  public void removeSnowBalls(){
+    for (SnowBall sb : snowBallsToRemove){
+      snowBalls.remove(sb);
+    }
   }
 
   public void removeCreatures(Slot s) {
