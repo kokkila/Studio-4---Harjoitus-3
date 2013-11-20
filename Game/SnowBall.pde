@@ -54,10 +54,13 @@ class SnowBall {
       //println("prosentteja:" + (timePassed/this.distance) + "   timePassed:  " + timePassed + "  thisdistance:  " + this.distance);
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
-      println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
-      println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
+      //println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
+      //println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
       this.setSize(Math.round((this.y-this.horizon)*this.sizeSpeed));      
-      println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
+      //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
+      if(this.y<this.horizon){
+          destroyBall(); 
+      }
     }
   }
 
@@ -66,10 +69,7 @@ class SnowBall {
     //println("Heita to    x: " + x + "  y: " +y);
     this.startTime = currentTime;
     this.Dx = x-this.x;
-    this.Dy = y-this.y;
-    if(y<this.horizon){
-     this.Dy = this.horizon-this.y; 
-    }
+    this.Dy = y-this.y; 
     //println("this.x:  " + this.x + "this.y" + this.y);
     //println("Dx:" + this.Dx + "  Dy: " + this.Dy);
     //etäisyys millisekunteina eli kauan lento kestää
@@ -96,11 +96,7 @@ class SnowBall {
       if (c.checkHit(this.x, this.y)) {
         gameEngine.removeCreatures(c.slot);
         gameEngine.addPoints(10);
-        println("CREATUREEN OSUI!!!!!");
-        this.moving = false;
-        this.Dx = 0;
-        this.Dy = 0;
-        //this.gameEngine.removeSnowBalls(this);
+        destroyBall();
       }
       else {
         //println("Ball missed all targets");
@@ -113,14 +109,18 @@ class SnowBall {
   // POISTA ITSESTI LISTASTA
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
-      if (santa.visible && this.moving) {
+      if (santa.visible && this.moving && this.orgY<santa.upY) {
         this.gameEngine.substractLives(1);
-        this.moving = false;
-        this.Dx = 0;
-        this.Dy = 0;
-        //this.gameEngine.removeSnowBalls(this);
+        destroyBall();
       }
     }
+  }
+  
+  void destroyBall(){
+    this.moving = false;
+    this.Dx = 0;
+    this.Dy = 0;
+    //this.gameEngine.removeSnowBalls(this);
   }
 
   int getX() {
