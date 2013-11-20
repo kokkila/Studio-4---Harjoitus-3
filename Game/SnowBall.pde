@@ -1,12 +1,14 @@
 class SnowBall {
   boolean moving;
   boolean toSanta;
+  boolean pointsTaken;
   // x ja y mihin pallo piirretään
   int x, y;
   //aloitus pisteet
   int orgX, orgY;
   int Dx, Dy, distance;
   int startTime;
+  int destroyTime;
   int horizon;
   float size, topSize;
 
@@ -14,6 +16,7 @@ class SnowBall {
   float sizeSpeed;
   float timeConverter;
   PImage ballPic;
+  PImage ballSplash;
   GameEngine gameEngine;
 
 
@@ -29,13 +32,18 @@ class SnowBall {
     this.timeConverter = 3;
     this.gameEngine = gameEngine;
     this.ballPic=loadImage("snowball.png");
-    gameEngine.addSnowBalls(this);
+    this.ballSplash = loadImage("splat.png");
+    this.gameEngine.addSnowBalls(this);
+    this.pointsTaken = false;
     //println("Uusi pallo luotiin");
   }
 
-  void display() {
-    //println("x: " + this.x + "y: " + this.y + "this.size: " + this.size);
-    //this.ballPic.resize(Math.round(this.size), Math.round(this.size));
+  void display(int currentTime) {
+    if (this.ballPic == this.ballSplash) {
+      if (currentTime-destroyTime > 50) {
+        this.gameEngine.setSnowBallToBeRemoved(this);
+      }
+    }
     image(this.ballPic, this.x, this.y, this.size, this.size);
     //println("snowball x: " + this.x + "  y :" + this.y);
   }
@@ -55,8 +63,8 @@ class SnowBall {
       //println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
       this.setSize(Math.round((this.y-this.horizon)*this.sizeSpeed));      
       //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
-      if(this.y<this.horizon || (timePassed/this.distance)>1){
-          destroyBall(); 
+      if (this.y<this.horizon || (timePassed/this.distance)>1) {
+        destroyBall();
       }
     }
   }
@@ -87,10 +95,11 @@ class SnowBall {
       //println("TRUE");
 
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
-      if (c.checkHit(this.x, this.y)) {
-        gameEngine.removeCreatures(c.slot);
-        gameEngine.addPoints(10);
-        destroyBall();
+      if (c.checkHit(this.x, this.y) && !pointsTaken) {
+        this.gameEngine.removeCreatures(c.slot);
+        this.gameEngine.addPoints(10);
+        this.destroyBall();
+        this.pointsTaken = true;
       }
       else {
         //println("Ball missed all targets");
@@ -104,18 +113,20 @@ class SnowBall {
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
       println("santa visi: " + santa.visible);
-      if (santa.visible && this.orgY<santa.upY) {
+      if (santa.visible && this.orgY<santa.upY-110 && !pointsTaken) {
         this.gameEngine.substractLives(1);
+        this.pointsTaken = true;
         destroyBall();
       }
     }
   }
-  
-  void destroyBall(){
+
+  void destroyBall() {
     this.moving = false;
+    this.destroyTime = millis();
     this.Dx = 0;
     this.Dy = 0;
-    this.gameEngine.setSnowBallToBeRemoved(this);
+    this.ballPic = this.ballSplash;
   }
 
   int getX() {
