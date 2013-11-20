@@ -37,7 +37,7 @@ void setup() {
   this.instructions_y2 = 400;
   this.windowSizeX = 1024;
   this.windowSizeY = 600;
-  size(windowSizeX, windowSizeY);
+  size(1024, 600);
   this.gameEngine = new GameEngine(this.lives, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);

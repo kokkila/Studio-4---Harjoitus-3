@@ -31,6 +31,13 @@ class GameEngine {
     creaturesMap = new HashMap <Slot, Creature>();
     initializeSlots();
     this.gui = new GUI(this);
+    this.resizeCreatures();
+  }
+  
+  void resizeCreatures(){
+      for (PImage p: creatureImages) {
+        p.resize(Math.round(p.width*0.1), Math.round(p.height*0.1));
+      }
   }
 
   void initializeSlots() {

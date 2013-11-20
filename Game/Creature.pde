@@ -18,7 +18,6 @@ class Creature {
     this.slot = slot;
     this.gameEngine = gameEngine;
     this.creatureImage = creatureImage;
-    this.creatureImage.resize(Math.round(this.creatureImage.width*0.1), Math.round(this.creatureImage.height*0.1));
 
     //println("UUSI CREATURE LUOTIIN");
   }
