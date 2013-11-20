@@ -33,7 +33,7 @@ class SnowBall {
   }
 
   void display() {
-    println("x: " + this.x + "y: " + this.y + "this.size: " + this.size);
+    //println("x: " + this.x + "y: " + this.y + "this.size: " + this.size);
     //this.ballPic.resize(Math.round(this.size), Math.round(this.size));
     image(this.ballPic, this.x, this.y, this.size, this.size);
     //println("snowball x: " + this.x + "  y :" + this.y);
@@ -44,7 +44,7 @@ class SnowBall {
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
   // Atro: Pallot ei liiku
   void chanceLoc(int currentTime) {
-    println("current:  " + currentTime + " start: " + startTime + " == timePassed: "); 
+    //println("current:  " + currentTime + " start: " + startTime + " == timePassed: "); 
     if (moving) {
       float timePassed = currentTime - startTime;
       if (this.Dx == 0 || this.Dy== 0) {
@@ -84,11 +84,14 @@ class SnowBall {
   //POISTA ITSESI LISTASTA
   void checkCollision(Creature c, int currentTime) {  
     // jos pallo lentänyt vaadittavan ajan
+    //println("CT - sT: " + (currentTime-this.startTime) + ", d: " + this.distance);
     if ((currentTime-this.startTime)>= this.distance) {
+      //println("TRUE");
+      
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
-      if (c.checkHit((int)(this.x+(this.size/2)), (int)(this.y+(this.size)/2))) {
+      if (c.checkHit(this.x, this.y)) {
         gameEngine.removeCreatures(c.slot);
-        //println("CREATUREEN OSUI!!!!!");
+        println("CREATUREEN OSUI!!!!!");
         this.moving = false;
         this.Dx = 0;
         this.Dy = 0;

@@ -35,10 +35,10 @@ class GameEngine {
 
   void initializeSlots() {
     creaturesMap.put(new Slot(50, 400, true), null);
-    creaturesMap.put(new Slot(250, 400, true), null);
-    creaturesMap.put(new Slot(750, 430, true), null);
-    creaturesMap.put(new Slot(650, 290, false), null);
-    creaturesMap.put(new Slot(850, 290, false), null);
+    //creaturesMap.put(new Slot(250, 400, true), null);
+    //creaturesMap.put(new Slot(750, 430, true), null);
+    //creaturesMap.put(new Slot(650, 290, false), null);
+    //creaturesMap.put(new Slot(850, 290, false), null);
   }
 
 
@@ -50,7 +50,7 @@ class GameEngine {
     moveSnowBalls(runningTime);
     checkCollisions();
     generateCreatures(runningTime);
-    generateSnowBalls(runningTime);
+    //generateSnowBalls(runningTime);
     santa.updateCord(runningTime);
     gui.display();
     /*for (SnowBall sb: snowBalls){
@@ -93,12 +93,12 @@ class GameEngine {
   }
 
   public void generateSnowBalls(int runningTime) {
-    double rand = Math.random();
     double tmpTime = 1/Math.pow(runningTime, 0.00125);
     for (Object value : creaturesMap.values()) {
       if (value != null) {
         Creature creature = (Creature)value;
-        if (rand > tmpTime && !creature.hasThrown()) {
+        double rand = Math.random();
+        if (rand > tmpTime && creature.canThrow(runningTime)) {
           println("millis:" + millis());
           println("runningTime: " + this.runningTime);
           creature.throwSnowBall(this.santa, this.runningTime);
