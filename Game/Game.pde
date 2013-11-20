@@ -73,10 +73,12 @@ void draw(){
 
 void mousePressed(){
   if (this.started) {
-    if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x - (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x + (gameEngine.santa.width/2) < mouseX) {
+    if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x - (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x + (gameEngine.santa.width/2) < mouseX){ 
+      if(gameEngine.santa.visible){
       SnowBall sb = new SnowBall(gameEngine.santa.x+50, gameEngine.santa.y-110, gameEngine);
       sb.throwBallto(mouseX, mouseY, runningTime);
       gameEngine.addSantaSnowBalls(sb);
+      }
     }
   } 
   else {
@@ -95,7 +97,6 @@ void mousePressed(){
 void mouseDragged(){
   if(mouseY > gameEngine.santa.y - gameEngine.santa.height/2 && mouseY <= gameEngine.santa.y + gameEngine.santa.height/2
     && mouseX < gameEngine.santa.x + gameEngine.santa.width && mouseX > gameEngine.santa.x - gameEngine.santa.width){
-    println("Drag Santa");
     gameEngine.santa.updateCord(millis());
   }
   
