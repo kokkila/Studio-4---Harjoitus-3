@@ -21,7 +21,7 @@ StartScreen startScreen;
 EndScreen endScreen;
 InstructionScreen instructionScreen;
 
-void setup(){
+void setup() {
   this.lives = 3;
   this.started = false;
   this.instructions = false;

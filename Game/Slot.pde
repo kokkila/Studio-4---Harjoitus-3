@@ -1,4 +1,4 @@
-class Slot{
+class Slot {
   int x,y;
   PImage slotImage;
   boolean occupied;
