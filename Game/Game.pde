@@ -20,25 +20,28 @@ EndScreen endScreen;
 
 void setup(){
   lives = 3;
+  this.started = false;
   windowSizeX = 1024;
   windowSizeY = 600;
   size(windowSizeX, windowSizeY);
   this.gameEngine = new GameEngine(3, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
-  //Luodaan startScreen
-  //startScreen.draw();
+  this.startScreen = new StartScreen();
+  startScreen.draw();
 }
 
 
 void draw(){
-  background(0);
+  if (this.started) {
+    background(0);
   this.runningTime = millis();
   if(!mousePressed){
     //gameEngine.santa.moving = false;
   }
   gameEngine.updateGame(runningTime);
   //Gui.draw()
+  }
 }
 void mousePressed(){
   if(mouseY < gameEngine.santa.y - gameEngine.santa.height){
