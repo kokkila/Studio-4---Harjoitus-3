@@ -53,10 +53,10 @@ class SnowBall {
       //println("prosentteja:" + (timePassed/this.distance) + "   timePassed:  " + timePassed + "  thisdistance:  " + this.distance);
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
-      //println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
-      //println("uusi koko: " + Math.round(this.sizeSpeed*this.y) + this.topSize);
+      println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
+      println("uusi koko: " + Math.round(this.sizeSpeed*this.y) + this.topSize);
       this.setSize(Math.round(this.sizeSpeed*this.y) + this.topSize);
-      //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
+      println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
     }
   }
 
@@ -95,6 +95,7 @@ class SnowBall {
         this.moving = false;
         this.Dx = 0;
         this.Dy = 0;
+        //this.gameEngine.removeSnowBalls(this);
       }
       else {
         //println("Ball missed all targets");
@@ -108,11 +109,11 @@ class SnowBall {
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
       if(santa.visible){
-       //println("SANTAAAN OSUI!!!!!!!");
-       gameEngine.substractLives(1);
+       this.gameEngine.substractLives(1);
        this.moving = false;
        this.Dx = 0;
        this.Dy = 0;
+       //this.gameEngine.removeSnowBalls(this);
       }
     }
   }

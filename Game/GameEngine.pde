@@ -99,8 +99,6 @@ class GameEngine {
         Creature creature = (Creature)value;
         double rand = Math.random();
         if (rand > tmpTime && creature.canThrow(runningTime)) {
-          println("millis:" + millis());
-          println("runningTime: " + this.runningTime);
           creature.throwSnowBall(this.santa, this.runningTime);
         }
       }
