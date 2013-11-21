@@ -8,7 +8,7 @@ class GameEngine {
   Game game;
   Santa santa;
   PImage[] creatureImages = { 
-      loadImage("creature_bunny.png"), loadImage("creature_chick.png"), loadImage("creature_ghost.png"), loadImage("creature_reindeer.png"), loadImage("creature_snowman.png"), loadImage("creature_witch.png")
+      loadImage("creature_bunny_100.png"), loadImage("creature_chick_100.png"), loadImage("creature_ghost_100.png"), loadImage("creature_reindeer_100.png"), loadImage("creature_snowman_100.png"), loadImage("creature_witch_100.png")
     };
   ArrayList<SnowBall> santaSnowBalls;
   ArrayList<SnowBall> creatureSnowBalls;

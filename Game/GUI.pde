@@ -6,12 +6,14 @@ class GUI {
   PImage backgroundImage;
   PImage backSnow;
   PImage frontSnow;
+  PImage santaSnow;
 
   public GUI(GameEngine gameEngine) {
     this.gameEngine = gameEngine;
     this.backgroundImage = loadImage("game_screen.png");
     this.backSnow = loadImage("snow_2.png");
     this.frontSnow = loadImage("snow_1.png");
+    this.santaSnow = loadImage("snow_3.png");
   }
   public void display() {
     // piirtää taustan, takaCreaturet, takaKinos, etuCreaturet, etuKinos, Lumipallot, Santa sekä menun
@@ -47,11 +49,14 @@ class GUI {
     image(frontSnow, 0, -100);
     imageMode(CENTER);
     for (SnowBall sb : gameEngine.santaSnowBalls) {
-      sb.display(millis());
+      sb.display(millis(), true);
     }
     for (SnowBall sb : gameEngine.creatureSnowBalls) {
-      sb.display(millis());
+      sb.display(millis(), false);
     }
+    imageMode(CORNER);
+    image(this.santaSnow, 0, -30);
+    imageMode(CENTER);
     gameEngine.santa.display();
   }
 }
