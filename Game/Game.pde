@@ -74,7 +74,7 @@ void draw(){
 void mousePressed(){
   if (this.finished) {
     if (mouseX > 410 && mouseX < 625 && mouseY > 457 && mouseY < 490) {
-      this.startScreen.draw();
+      println("menee tänne");
     }
   }
   if (this.started) {
