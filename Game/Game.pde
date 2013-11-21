@@ -73,7 +73,6 @@ void draw(){
   }
 }
 
-void mouseClicked(){
   
   
 
