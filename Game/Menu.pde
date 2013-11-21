@@ -21,6 +21,6 @@ class Menu {
       i += 1;
     }
     stroke(255);
-    text(this.gameEngine.points, 800, 20);
+    text("Points: " + this.gameEngine.getPoints(), 800, 20);
   }
 }

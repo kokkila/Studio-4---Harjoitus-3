@@ -72,6 +72,11 @@ void draw(){
 }
 
 void mousePressed(){
+  if (this.finished) {
+    if (mouseX > 410 && mouseX < 625 && mouseY > 457 && mouseY < 490) {
+      this.startScreen.draw();
+    }
+  }
   if (this.started) {
     if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x - (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x + (gameEngine.santa.width/2) < mouseX){ 
       if(gameEngine.santa.visible){
