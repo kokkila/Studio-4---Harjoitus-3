@@ -20,5 +20,7 @@ class Menu {
       image(heart_image, this.x + (i*30), this.y);
       i += 1;
     }
+    stroke(255);
+    text(this.gameEngine.points, 800, 20);
   }
 }
