@@ -1,13 +1,16 @@
 class Menu {
   PImage heart_image;
+  PFont font;
   GameEngine gameEngine;
   int x;
   int y;
   int image_width;
   
-  Menu(GameEngine gameEngine) {
+  Menu(GameEngine gameEngine, PFont font) {
     this.gameEngine = gameEngine;
     this.heart_image = loadImage("heart.png");
+    this.font = font;
+    textFont(this.font, 20);
     this.x = 20;
     this.y = 20;
     this.image_width = 30;
@@ -20,7 +23,7 @@ class Menu {
       image(heart_image, this.x + (i*30), this.y);
       i += 1;
     }
-    stroke(255);
-    text("Points: " + this.gameEngine.getPoints(), 800, 20);
+    fill(255);
+    text("Points: " + this.gameEngine.getPoints(), 700, 30);
   }
 }

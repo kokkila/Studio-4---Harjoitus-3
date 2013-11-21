@@ -1,5 +1,6 @@
 import java.lang.Math;
 PImage snowBallPic;
+PFont font;
 int runningTime;
 int windowSizeX, windowSizeY;
 int points, lives;
@@ -23,7 +24,7 @@ InstructionScreen instructionScreen;
 Menu menu;
 
 void setup() {
-  this.lives = 10;
+  this.lives = 5;
   this.started = false;
   this.instructions = false;
   this.finished = false;
@@ -38,14 +39,15 @@ void setup() {
   this.windowSizeX = 1024;
   this.windowSizeY = 600;
   size(1024, 600);
+  this.font = loadFont("Noteworthy-Bold-32.vlw");
   orientation(LANDSCAPE);
   this.gameEngine = new GameEngine(this.lives, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
-  this.endScreen = new EndScreen(this.gameEngine);
+  this.endScreen = new EndScreen(this.gameEngine, this.font);
   this.instructionScreen = new InstructionScreen(this);
-  this.menu = new Menu(this.gameEngine);
+  this.menu = new Menu(this.gameEngine, this.font);
 }
 
 
@@ -74,7 +76,7 @@ void draw(){
 void mousePressed(){
   if (this.finished) {
     if (mouseX > 410 && mouseX < 625 && mouseY > 457 && mouseY < 490) {
-      println("menee tänne");
+      setup();
     }
   }
   if (this.started) {
@@ -100,8 +102,7 @@ void mousePressed(){
 }
 
 void mouseDragged(){
-  if(mouseY > gameEngine.santa.y - gameEngine.santa.height/2 && mouseY <= gameEngine.santa.y + gameEngine.santa.height/2
-    && mouseX < gameEngine.santa.x + gameEngine.santa.width && mouseX > gameEngine.santa.x - gameEngine.santa.width){
+  if(mouseY > gameEngine.santa.y - gameEngine.santa.height/1.5 && mouseX < gameEngine.santa.x + gameEngine.santa.width*(1.2) && mouseX > gameEngine.santa.x - gameEngine.santa.width*0.8){
     gameEngine.santa.updateCord(millis());
   }
   
