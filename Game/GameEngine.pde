@@ -10,7 +10,8 @@ class GameEngine {
   PImage[] creatureImages = { 
       loadImage("creature_bunny.png"), loadImage("creature_chick.png"), loadImage("creature_ghost.png"), loadImage("creature_reindeer.png"), loadImage("creature_snowman.png"), loadImage("creature_witch.png")
     };
-  ArrayList<SnowBall> snowBalls;
+  ArrayList<SnowBall> santaSnowBalls;
+  ArrayList<SnowBall> creatureSnowBalls;
   ArrayList<SnowBall> snowBallsToRemove;
   //ArrayList<Creature> creatures; // Tää varmaan voisi olla sanakirja, tyyliin slot->creature(t)
   HashMap<Slot, Creature> creaturesMap; // EN tiedä yhtään toimiiko tää
@@ -27,13 +28,14 @@ class GameEngine {
     this.game = game;
 
     //Santalle annettava myös alhalla olon koordinaatti int downY
-    this.santa = new Santa(500, 550, 600);
-    snowBalls = new ArrayList<SnowBall>();
+    this.santa = new Santa(500, 600, 700);
+    santaSnowBalls = new ArrayList<SnowBall>();
+    creatureSnowBalls = new ArrayList<SnowBall>();
     snowBallsToRemove = new ArrayList<SnowBall>();
     creaturesMap = new HashMap <Slot, Creature>();
     initializeSlots();
     this.gui = new GUI(this);
-    this.resizeCreatures();
+    //this.resizeCreatures();
   }
   
   void resizeCreatures(){
@@ -73,7 +75,10 @@ class GameEngine {
   }
 
   public void moveSnowBalls(int runningTime) {
-    for (SnowBall sb: snowBalls) {
+    for (SnowBall sb: santaSnowBalls) {
+      sb.chanceLoc(runningTime);
+    }
+    for (SnowBall sb: creatureSnowBalls) {
       sb.chanceLoc(runningTime);
     }
   }
@@ -89,12 +94,14 @@ class GameEngine {
       }
       sb.checkCollision(santa, this.runningTime);
     }*/
-    for (SnowBall sb: snowBalls) {
+    for (SnowBall sb: santaSnowBalls) {
       for (Creature c : gameEngine.creaturesMap.values()) {
         if (c != null) {
           sb.checkCollision(c, this.runningTime);// ...
         }
       }
+    }
+    for (SnowBall sb: creatureSnowBalls) {
       sb.checkCollision(santa, this.runningTime);
     }
   }
@@ -160,8 +167,12 @@ class GameEngine {
     this.points = this.points + i;
   }
 
-  public void addSnowBalls(SnowBall sB) {
-    snowBalls.add(sB);
+  public void addSantaSnowBalls(SnowBall sB) {
+    santaSnowBalls.add(sB);
+  }
+  
+  public void addCreatureSnowBalls(SnowBall sB) {
+    creatureSnowBalls.add(sB);
   }
 
   public void addCreatures(Creature c) {
@@ -174,8 +185,10 @@ class GameEngine {
   
   public void removeSnowBalls(){
     for (SnowBall sb : snowBallsToRemove){
-      snowBalls.remove(sb);
+      santaSnowBalls.remove(sb);
+      creatureSnowBalls.remove(sb);
     }
+    snowBallsToRemove.clear();
   }
 
   public void removeCreatures(Slot s) {

@@ -47,7 +47,9 @@ class Creature {
 
   //Atro: Creaturet heittää Santaa
   void throwSnowBall(Santa santa, int timeThrown) {   // luo uuden lumipallo-olion, joka lähtee kohti creaturea
-    new SnowBall(x, y, this.gameEngine).throwBallto(santa.x, santa.y, timeThrown); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
+    SnowBall sb = new SnowBall(x, y, this.gameEngine);
+    sb.throwBallto(santa.x, santa.upY-100, timeThrown); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
+    gameEngine.addCreatureSnowBalls(sb);
     this.hasThrown = true;
   }
 

@@ -38,11 +38,12 @@ void setup() {
   this.windowSizeX = 1024;
   this.windowSizeY = 600;
   size(1024, 600);
+  orientation(LANDSCAPE);
   this.gameEngine = new GameEngine(this.lives, this);
   //snowBallPic = loadImage("snowball.png");
   //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
-  this.endScreen = new EndScreen();
+  this.endScreen = new EndScreen(this.gameEngine);
   this.instructionScreen = new InstructionScreen(this);
   this.menu = new Menu(this.gameEngine);
 }
@@ -57,7 +58,8 @@ void draw(){
     background(0);
     this.runningTime = millis();
     if(!mousePressed){
-      //gameEngine.santa.moving = false;
+      gameEngine.santa.moveAutom(this.runningTime);
+      gameEngine.santa.moving = false;
     }
     gameEngine.updateGame(runningTime);
     //Gui.draw()
@@ -71,10 +73,15 @@ void draw(){
 
 void mousePressed(){
   if (this.started) {
-    if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x + (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x - (gameEngine.santa.width/2) < mouseX) {
-      new SnowBall(gameEngine.santa.x, gameEngine.santa.y, gameEngine).throwBallto(mouseX, mouseY, runningTime);
+    if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x - (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x + (gameEngine.santa.width/2) < mouseX){ 
+      if(gameEngine.santa.visible){
+      SnowBall sb = new SnowBall(gameEngine.santa.x+50, gameEngine.santa.y-110, gameEngine);
+      sb.throwBallto(mouseX, mouseY, runningTime);
+      gameEngine.addSantaSnowBalls(sb);
+      }
     }
-  } else {
+  } 
+  else {
     if (mouseX > this.start_x1 && mouseX < this.start_x2 && mouseY > this.start_y1 && mouseY < this.start_y2 && this.instructions == false) {
       this.started = true;
     }
@@ -90,8 +97,7 @@ void mousePressed(){
 void mouseDragged(){
   if(mouseY > gameEngine.santa.y - gameEngine.santa.height/2 && mouseY <= gameEngine.santa.y + gameEngine.santa.height/2
     && mouseX < gameEngine.santa.x + gameEngine.santa.width && mouseX > gameEngine.santa.x - gameEngine.santa.width){
-    //println("Drag Santa");
-    gameEngine.santa.startMoving();
+    gameEngine.santa.updateCord(millis());
   }
   
   /*if(mouseY > 500 && mouseY <= 550 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && !gameEngine.santa.moving){

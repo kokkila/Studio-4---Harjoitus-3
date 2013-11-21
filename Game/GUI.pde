@@ -46,8 +46,11 @@ class GUI {
     }
     image(frontSnow, 0, -100);
     imageMode(CENTER);
-    for (SnowBall sb : gameEngine.snowBalls) {
-      sb.display();
+    for (SnowBall sb : gameEngine.santaSnowBalls) {
+      sb.display(millis());
+    }
+    for (SnowBall sb : gameEngine.creatureSnowBalls) {
+      sb.display(millis());
     }
     gameEngine.santa.display();
   }
