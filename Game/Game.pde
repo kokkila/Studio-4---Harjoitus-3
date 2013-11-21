@@ -1,3 +1,4 @@
+import ddf.minim.*;
 import java.lang.Math;
 PImage snowBallPic;
 PFont font;
@@ -7,6 +8,7 @@ int points, lives;
 int start_x1, start_x2, start_y1, start_y2;
 int instructions_x1, instructions_x2, instructions_y1, instructions_y2;
 boolean started, finished, instructions;
+boolean firstStart = true;
 SnowBall snowball;
 Santa santa;
 ArrayList<SnowBall> snowBalls;
@@ -22,6 +24,8 @@ StartScreen startScreen;
 EndScreen endScreen;
 InstructionScreen instructionScreen;
 Menu menu;
+AudioPlayer player;
+Minim minim;
 
 void setup() {
   this.lives = 5;
@@ -48,6 +52,12 @@ void setup() {
   this.endScreen = new EndScreen(this.gameEngine, this.font);
   this.instructionScreen = new InstructionScreen(this);
   this.menu = new Menu(this.gameEngine, this.font);
+  if (this.firstStart) {
+  minim = new Minim(this);
+  player = minim.loadFile("carolbells.mp3", 2048);
+  player.loop();
+  }
+  this.firstStart = false;
 }
 
 
@@ -73,7 +83,12 @@ void draw(){
   }
 }
 
-  
+void stop()
+{
+  player.close();
+  minim.stop();
+  super.stop();
+}  
   
 
 void mousePressed(){
