@@ -108,22 +108,25 @@ class GameEngine {
 
   public void generateCreatures(int runningTime) {
     //Luo satunnaisesti otuksia ennalta määrättyihin slotteihin, mikäli slotissa ei ole vielä otusta
-    double tmpTime = 1/Math.pow(runningTime, 0.00125);
+    double tmpTime = 1/Math.pow(runningTime, 0.0002);
     for (Slot slot: creaturesMap.keySet()) {
       double rand = Math.random();
-      //println(slot);
+      //println("runningTime: " + runningTime + ", tmpTime: " + tmpTime + ", rand: " + rand);
       if (creaturesMap.get(slot) == null) {
         if (rand > tmpTime) {
           int randX = (int)(100*Math.random()-50);
-          //println("tmpTime: " + tmpTime + ", rand: " + rand);
-          creaturesMap.put(slot, new Creature(slot.x + randX, slot.y, 3000, 1500, runningTime, randomCreatureImage(), slot, this));
+          double maxThrows = Math.random() * (6-6.5/Math.pow(runningTime, 0.04));
+          println("double maxThrows: " + maxThrows);
+          creaturesMap.put(slot, new Creature(slot.x + randX, slot.y,
+          (int)(3000*Math.pow(tmpTime, 10)), (int)(1500*Math.pow(tmpTime, 10)), runningTime, 
+          (int)Math.round(maxThrows), randomCreatureImage(), slot, this));
         }
       }
     }
   }
 
   public void generateSnowBalls(int runningTime) {
-    double tmpTime = 1/Math.pow(runningTime, 0.00125);
+    double tmpTime = 1/Math.pow(runningTime, 0.0005);
     for (Object value : creaturesMap.values()) {
       if (value != null) {
         Creature creature = (Creature)value;

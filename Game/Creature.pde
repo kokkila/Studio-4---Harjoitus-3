@@ -1,19 +1,21 @@
 class Creature {
-  int x, y, timeUp, moveTime, timeCreated;
+  int x, y, timeUp, moveTime, timeCreated, maxThrows, throwedBalls;
   float currentY;
-  boolean hasThrown, isHit;
+  boolean isHit;
   Slot slot;
   PImage creatureImage;
   GameEngine gameEngine;
 
-  Creature(int x, int y, int timeUp, int moveTime, int timeCreated, PImage creatureImage, Slot slot, GameEngine gameEngine) { // lisää: määrittele kuvan sijainti parametrina
+  Creature(int x, int y, int timeUp, int moveTime, int timeCreated, int maxThrows, PImage creatureImage, Slot slot, GameEngine gameEngine) { // lisää: määrittele kuvan sijainti parametrina
     this.x = x; // haluttu lopullinen kuvan x-koordinaatti, kuvan vasen yläreuna
     this.y = y; // creaturen y-koordinaatti sen ylhäällä ollessa, kuvan vasen yläreuna
     this.currentY = y; // tämänhetkinen y - käytetään creaturen liikkumiseen kummun päälle/taakse
     this.timeUp = timeUp;
     this.moveTime = moveTime;
     this.timeCreated = timeCreated;
-    this.hasThrown = false;
+    this.throwedBalls = 0;
+    this.maxThrows = maxThrows;
+    println("MaxThrows: " + maxThrows);
     this.isHit = false;
     this.slot = slot;
     this.gameEngine = gameEngine;
@@ -50,7 +52,7 @@ class Creature {
     SnowBall sb = new SnowBall(x, y, this.gameEngine);
     sb.throwBallto(santa.x, santa.upY-100, timeThrown); // tallennetaanko johonkin listaan, jotta voidaan tarkistaa osuiko?
     gameEngine.addCreatureSnowBalls(sb);
-    this.hasThrown = true;
+    this.throwedBalls++;
   }
 
   void riseUp(int timeNow) {
@@ -73,15 +75,15 @@ class Creature {
     //println("CheckHit: BallX: " + x + ", BallY: " + y + ", thisX: " + this.x + "-" + (this.x+this.creatureImage.width) + ", thisY: " + this.currentY + "-" + (this.y+this.creatureImage.height));
     if (x >= this.x && x <= this.x+this.creatureImage.width && y >= this.currentY && y <= this.y+this.creatureImage.height) {
       this.isHit = true;
-      println("OSUI");
+      //println("OSUI");
       return true;
     }
     else return false;
   }
 
   boolean canThrow(int timeNow) {
-    if (timeNow - timeCreated > moveTime && timeNow - timeCreated < moveTime + timeUp && !hasThrown){
-      hasThrown = true;
+    if (timeNow - timeCreated > moveTime && timeNow - timeCreated < moveTime + timeUp && throwedBalls < maxThrows){
+      //throwedBalls++;
       return true;
     }
     return false;

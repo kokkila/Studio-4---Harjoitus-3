@@ -66,11 +66,11 @@ class Santa {
   // mouseDown = true == sormi alhaalle
   // kutsu tätä joka päivityksessä
   void updateCord(int timeNow) {
-    println("upY: " + upY + ", height: " + height/2);
+    //println("upY: " + upY + ", height: " + height/2);
     if (mouseY > y - height/2 && mouseY <= y + height/2
       && mouseX < x + width && mouseX > x - width && this.y >= upY) {
       if (!moving) {
-        println("!moving");
+        //println("!moving");
         fromCenterY = mouseY-this.y;
         this.moving = true;
       }

@@ -112,7 +112,7 @@ class SnowBall {
   // POISTA ITSESTI LISTASTA
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
-      println("santa visi: " + santa.visible);
+      //println("santa visi: " + santa.visible);
       if (santa.visible && this.orgY<santa.upY-110 && !pointsTaken) {
         this.gameEngine.substractLives(1);
         this.pointsTaken = true;
