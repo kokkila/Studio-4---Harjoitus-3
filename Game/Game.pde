@@ -93,7 +93,7 @@ void stop()
 
 void mousePressed(){
   if (this.finished) {
-    if (mouseX > 410 && mouseX < 625 && mouseY > 457 && mouseY < 490) {
+    if (mouseX > 410 && mouseX < 625 && mouseY > 510 && mouseY < 550) {
       setup();
     }
   }
