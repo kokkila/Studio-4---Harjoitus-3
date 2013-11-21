@@ -73,6 +73,10 @@ void draw(){
   }
 }
 
+void mouseClicked(){
+  
+  
+
 void mousePressed(){
   if (this.finished) {
     if (mouseX > 410 && mouseX < 625 && mouseY > 457 && mouseY < 490) {

@@ -38,9 +38,9 @@ class SnowBall {
     //println("Uusi pallo luotiin");
   }
 
-  void display(int currentTime) {
+  void display(int currentTime, boolean santaBall) {
     if (this.ballPic == this.ballSplash) {
-      if (currentTime-destroyTime > 50) {
+      if (currentTime-destroyTime > 50 || !santaBall) {
         this.gameEngine.setSnowBallToBeRemoved(this);
       }
     }
@@ -64,7 +64,11 @@ class SnowBall {
       this.setSize(Math.round((this.y-this.horizon)*this.sizeSpeed));      
       //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
       if (this.y<this.horizon || (timePassed/this.distance)>1) {
-        destroyBall();
+
+           this.gameEngine.setSnowBallToBeRemoved(this);
+       
+                destroyBall();
+
       }
     }
   }
@@ -112,7 +116,6 @@ class SnowBall {
   // POISTA ITSESTI LISTASTA
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
-      println("santa visi: " + santa.visible);
       if (santa.visible && this.orgY<santa.upY-110 && !pointsTaken) {
         this.gameEngine.substractLives(1);
         this.pointsTaken = true;

@@ -66,24 +66,22 @@ class Santa {
   // mouseDown = true == sormi alhaalle
   // kutsu tätä joka päivityksessä
   void updateCord(int timeNow) {
-    println("upY: " + upY + ", height: " + height/2);
     if (mouseY > y - height/2 && mouseY <= y + height/2
       && mouseX < x + width && mouseX > x - width && this.y >= upY) {
       if (!moving) {
-        println("!moving");
         fromCenterY = mouseY-this.y;
         this.moving = true;
       }
       this.y = mouseY-fromCenterY;
     }
-    else {
-      if (this.y < upY) {
-        this.y = upY;
-      }
-      if (this.y > downY) {
-        this.y = downY;
-      }
+
+    if (this.y < upY) {
+      this.y = upY;
     }
+    else if (this.y > downY) {
+      this.y = downY;
+    }
+
     // tarkistetaan ollaanko keskirajan ala vai yläpuolella
     this.checkVisibility();
   }
@@ -93,7 +91,7 @@ class Santa {
       if (timeNow-timeLastMove> 100) {
         timeLastMove = timeNow;
         // jos ollaan ylhäällä, liikutaan ylös
-        this.y = this.y-1;
+        this.y = this.y-3;
       }
       else {
         timeLastMove = timeNow-timeLastMove;
