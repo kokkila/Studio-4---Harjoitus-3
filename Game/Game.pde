@@ -1,4 +1,5 @@
-import ddf.minim.*;
+//import ddf.minim.*;
+import apwidgets.*;
 import java.lang.Math;
 PFont font;
 int runningTime;
@@ -14,8 +15,9 @@ StartScreen startScreen;
 EndScreen endScreen;
 InstructionScreen instructionScreen;
 Menu menu;
-AudioPlayer player;
-Minim minim;
+APMediaPlayer backgroundMusic;
+APMediaPlayer splatSound;
+//Minim minim;
 
 void setup() {
   this.lives = 5;
@@ -40,14 +42,28 @@ void setup() {
   this.endScreen = new EndScreen(this.gameEngine, this.font);
   this.instructionScreen = new InstructionScreen(this);
   this.menu = new Menu(this.gameEngine, this.font);
+  setupAudio();
   if (this.firstStart) {
-  minim = new Minim(this);
+    
+  /*minim = new Minim(this);
   player = minim.loadFile("carolbells.mp3", 2048);
-  player.loop();
-  }
+  player.loop();*/
   this.firstStart = false;
+  }
 }
 
+public void setupAudio(){
+  
+  backgroundMusic = new APMediaPlayer(this);
+  backgroundMusic.setMediaFile("carolbells.mp3");
+  backgroundMusic.start();
+  backgroundMusic.setLooping(true);
+  backgroundMusic.setVolume(1.0, 1.0);
+  
+  splatSound = new APMediaPlayer(this);
+  splatSound.setMediaFile("147541__benboncan__splat-ish.wav");
+  splatSound.setVolume(1.0, 1.0);
+}
 
 void draw() {
   if (this.finished) {
@@ -72,15 +88,16 @@ void draw() {
   }
 }
 
-void stop() {
+/*void stop() {
   player.close();
   minim.stop();
   super.stop();
-}  
+} */ 
 
 void mousePressed() {
   if (this.finished) {
     if (mouseX > 410 && mouseX < 625 && mouseY > 510 && mouseY < 550) {
+      backgroundMusic.seekTo(0);
       setup();
     }
   }

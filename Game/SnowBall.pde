@@ -104,6 +104,7 @@ class SnowBall {
         this.gameEngine.addPoints(10);
         this.destroyBall();
         this.pointsTaken = true;
+        this.gameEngine.game.splatSound.start();
       }
       else {
         //println("Ball missed all targets");
@@ -120,6 +121,7 @@ class SnowBall {
         this.gameEngine.substractLives(1);
         this.pointsTaken = true;
         destroyBall();
+        this.gameEngine.game.splatSound.start();
       }
     }
   }

@@ -81,7 +81,7 @@ class GameEngine {
 
   public void generateCreatures(int runningTime) {
 
-    double tmpTime = 1/Math.pow(runningTime, 0.0002);
+    double tmpTime = 1/Math.pow(runningTime+2000, 0.0003);
     for (Slot slot: creaturesMap.keySet()) {
       double rand = Math.random();
       if (creaturesMap.get(slot) == null) {
@@ -89,7 +89,7 @@ class GameEngine {
           int randX = (int)(100*Math.random()-50);
           int maxThrows = (int)Math.round(Math.random() * (6-6.5/Math.pow(runningTime, 0.04)));
           int upTime = (int)(3000*Math.pow(tmpTime, 10));
-          int moveTime = (int)(1000*Math.pow(tmpTime, 10));
+          int moveTime = (int)(700*Math.pow(tmpTime, 10));
           PImage creatureImage = randomCreatureImage(slot.front);
           creaturesMap.put(slot, new Creature(slot.x + randX, slot.y, upTime, moveTime, runningTime, maxThrows, creatureImage, slot, this));
         }
@@ -98,7 +98,7 @@ class GameEngine {
   }
 
   public void generateSnowBalls(int runningTime) {
-    double tmpTime = 1/Math.pow(runningTime, 0.0005);
+    double tmpTime = 1/Math.pow(runningTime, 0.0008);
     for (Object value : creaturesMap.values()) {
       if (value != null) {
         Creature creature = (Creature)value;
