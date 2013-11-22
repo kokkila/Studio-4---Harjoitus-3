@@ -1,31 +1,42 @@
 class SnowBall {
+  // onko lumipallo liikkeessä
   boolean moving;
+  // heitetäänkö pallo santaa kohti
   boolean toSanta;
+  // onko pisteet otettu
   boolean pointsTaken;
   // x ja y mihin pallo piirretään
   int x, y;
   //aloitus pisteet
   int orgX, orgY;
+  // muutos Dx ja Dy sekä etäisyys aikana distance
   int Dx, Dy, distance;
+  // pallon heittoaika
   int startTime;
+  // palllon tuhoutumisaika
   int destroyTime;
+  // horisontin koordinaatit
   int horizon;
+  // koot
   float size, topSize;
-
   // nopeudet jolla palloa siirretään: pineneminen ja siirtyminen xy
   float sizeSpeed;
+  // muutos luku, jolla akselin koordinaateista tehdään aikaa
   float timeConverter;
+  // liikkuvan pallon kuva
   PImage ballPic;
+  // tuhoutuneen pallon kuva
   PImage ballSplash;
   GameEngine gameEngine;
 
 
-
+  // luo uuden lumipallon, atribuutteina startX ja startY sekä pelimoottori gameEngine
   SnowBall(int startX, int startY, GameEngine gameEngine) {
     this.x = startX;
     this.y = startY;
     this.sizeSpeed = 0.1;
     this.horizon = 180;
+    // koko määräytyy y-koordinaatin mukaan
     this.size = Math.round(this.sizeSpeed*this.y);
     this.orgX = startX;
     this.orgY = startY;
@@ -33,93 +44,61 @@ class SnowBall {
     this.gameEngine = gameEngine;
     this.ballPic=loadImage("snowball.png");
     this.ballSplash = loadImage("splat.png");
-    //this.gameEngine.addSnowBalls(this);
     this.pointsTaken = false;
-    //println("Uusi pallo luotiin");
   }
 
+  // piirtää pallon tai sen jättämän jäljen, jos pallo heitettiin santaa kohti ei jälkeä piirretä
   void display(int currentTime, boolean santaBall) {
-    //println("BP: " + this.ballPic + ", BS: " + this.ballSplash);
     if (this.ballPic == this.ballSplash) {
-      //println("BALLSPLASH");
       if (currentTime-destroyTime > 50 || !santaBall) {
         this.gameEngine.setSnowBallToBeRemoved(this);
       }
     }
     image(this.ballPic, this.x, this.y, this.size, this.size);
-    //println("snowball x: " + this.x + "  y :" + this.y);
   }
 
 
 
   // annetaan muuttujaksi kuinka paljon aikaa heitosta kulunut ja lasketaan uusi sijainti sekä pallon koko
-  // Atro: Pallot ei liiku
   void chanceLoc(int currentTime) {
-    //println("current:  " + currentTime + " start: " + startTime + " == timePassed: "); 
     if (moving) {
       float timePassed = currentTime - startTime;
-      //println("prosentteja:" + (timePassed/this.distance) + "   timePassed:  " + timePassed + "  thisdistance:  " + this.distance);
       this.setX(this.orgX + Math.round(this.Dx*(timePassed/this.distance)));
       this.setY(this.orgY + Math.round(this.Dy*(timePassed/this.distance)));
-      //println("muutos: " + Math.round(this.sizeSpeed*this.y) + "topSIze:" + this.topSize);
-      //println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
       this.setSize(Math.round((this.y-this.horizon)*this.sizeSpeed));      
-      //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
-      //ATRO: Ilmeisesti äänteen lisääminen hidasti peliä niin paljon tjtn, että ohjelma luuli, että osumat ei ehtineetkään osua ja poisti pallot turhaan pelistä
       if (this.y<this.horizon || (timePassed/this.distance)>1.5) {
-
-          //println("EIKAIVAAN");
-           this.gameEngine.setSnowBallToBeRemoved(this);
-       
-                destroyBall();
-
+        this.gameEngine.setSnowBallToBeRemoved(this);
+        destroyBall();
       }
     }
   }
 
   // mihin pallo heitetään, ja lasketaan kuinka kaukana millisekunteina kohde on 
   void throwBallto(int x, int y, int currentTime) {
-    //println("Heita to    x: " + x + "  y: " +y);
     this.startTime = currentTime;
     this.Dx = x-this.x;
     this.Dy = y-this.y; 
-    //println("this.x:  " + this.x + "this.y" + this.y);
-    //println("Dx:" + this.Dx + "  Dy: " + this.Dy);
-    //etäisyys millisekunteina eli kauan lento kestää
     this.distance = abs(Math.round(sqrt((this.Dx*this.Dx)+(this.Dy*this.Dy))*this.timeConverter));
-    //println("distance:" + this.distance);
     this.moving = true;
   }
 
-  //Tarkistaa osuuko pallo otukseen c
-  //Muista huomioida myös etäisyys Santasta
+  //Tarkistaa osuuko pallo otukseen c, atribuuttina myös aika
   //Tarvittaessa muuttaa pisteitä ja poistaa creaturen pelistä
-
-  //POISTA ITSESI LISTASTA
   void checkCollision(Creature c, int currentTime) {  
     // jos pallo lentänyt vaadittavan ajan
-    //println("CT - sT: " + (currentTime-this.startTime) + ", d: " + this.distance);
     if ((currentTime-this.startTime)>= this.distance) {
-      //println("TRUE");
-
-      //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
       if (c.checkHit(this.x, this.y) && !pointsTaken) {
-        //println("HIT");
         this.gameEngine.removeCreatures(c.slot);
         this.gameEngine.addPoints(10);
         this.destroyBall();
         this.pointsTaken = true;
         this.gameEngine.game.splatSound.start();
       }
-      else {
-        //println("Ball missed all targets");
-      }
     }
   }
 
   //Tarkistaa osuuko pallo santaan
-  //Tarvittaessa vähentää elämiä
-  // POISTA ITSESTI LISTASTA
+  //Tarvittaessa vähentää elämiä 
   void checkCollision(Santa santa, int currentTime) {
     if ((currentTime-this.startTime)>= this.distance) {
       if (santa.visible && this.orgY<santa.upY-110 && !pointsTaken) {
@@ -131,13 +110,13 @@ class SnowBall {
     }
   }
 
+// tuhoaa pallon ja muuttaa pallon kuvaksi pallon jäljen
   void destroyBall() {
     this.moving = false;
     this.destroyTime = millis();
     this.Dx = 0;
     this.Dy = 0;
     this.ballPic = this.ballSplash;
-    //println("Changed");
   }
 
   int getX() {
