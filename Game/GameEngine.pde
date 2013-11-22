@@ -2,7 +2,6 @@
 //GameEngine-luokan tehtävä on pyörittää peliä
 class GameEngine {
   int runningTime;
-  //int windowSizeX, windowSizeY;
   int points, lives;
   boolean started, finished;
   Game game;
@@ -48,7 +47,8 @@ class GameEngine {
     creaturesMap.put(new Slot(850, 280, false), null);
   }
 
-
+  //Tätä metodia kutsutaan jokaisen draw-metodin alussa.
+  //Metodi päivittää pelimoottorin tilanteen ja luo tarvittaessa uusia olentoja ja lumipalloja
   void updateGame(int runningTime) {
 
     this.runningTime = runningTime;
@@ -64,6 +64,7 @@ class GameEngine {
     }
   }
 
+  //Liikuttaa lumipalloja
   public void moveSnowBalls(int runningTime) {
     for (SnowBall sb: santaSnowBalls) {
       sb.chanceLoc(runningTime);
@@ -73,6 +74,7 @@ class GameEngine {
     }
   }
 
+  //Tarkistaa osuvatko pallot pukkiin tai olentoihin
   public void checkCollisions() {
 
     for (SnowBall sb: santaSnowBalls) {
@@ -87,8 +89,8 @@ class GameEngine {
     }
   }
 
-  //Luo uusia olioita vapaisiin paikkoihin
-  //Olioiden luomisnopeus ja muut ominaisuudet muuttuvat ajan myötä, jotta peli vaikeutuisi koko ajan
+  //Luo uusia olentoja vapaisiin paikkoihin
+  //Olentojen luomisnopeus ja muut ominaisuudet muuttuvat ajan myötä, jotta peli vaikeutuisi koko ajan
   public void generateCreatures(int runningTime) {
 
     double tmpTime = 1/Math.pow(runningTime+2000, 0.0003);
@@ -107,7 +109,7 @@ class GameEngine {
     }
   }
 
-  //Pistää oliot heittämään lumipalloja pukkia päin
+  //Pistää olennot heittämään lumipalloja pukkia päin
   public void generateSnowBalls(int runningTime) {
     double tmpTime = 1/Math.pow(runningTime, 0.001);
     for (Object value : creaturesMap.values()) {
@@ -121,7 +123,7 @@ class GameEngine {
     }
   }
 
-  //Palauttaa satunnaisen oliokuvan
+  //Palauttaa satunnaisen olentokuvan
   public PImage randomCreatureImage(boolean frontOrBack) {
     int rand = (int)(6*Math.random());
     if (frontOrBack) {
@@ -170,7 +172,7 @@ class GameEngine {
     snowBallsToRemove.add(sB);
   }
 
-  //Poistaa pelistä pallot, jotka ovat jo osuneet tai karanneet liian kauaksi ja tyhjentää listan
+  //Poistaa pelistä pallot, jotka ovat jo osuneet tai karanneet liian kauaksi ja tyhjentää poistettavien pallojen listan
   public void removeSnowBalls() {
     for (SnowBall sb : snowBallsToRemove) {
       santaSnowBalls.remove(sb);

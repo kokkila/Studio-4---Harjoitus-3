@@ -1,3 +1,4 @@
+//Tämä luokka piirtää pelin ohjeet
 class InstructionScreen {
    PImage instruction_image;
    Game game;

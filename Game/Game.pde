@@ -44,7 +44,8 @@ void setup() {
   setupAudio();
 }
 
-// 
+//Käytimme apwidgets-kirjaston APMediaPlayeria äänien soittamiseen, koska minim-kirjasto ei toiminut Android Modessa
+//HUOM! apwidgets ei toimi Java Modessa
 public void setupAudio() {
 
   backgroundMusic = new APMediaPlayer(this);
@@ -95,11 +96,13 @@ void draw() {
 
 // onDestroy-metodia kutsutaan, kun käyttäjä palaa pois sovelluksesta
 public void onDestroy() {
-  //call onDestroy on super class
+  //Activity-yläluokan onDestroy-metodia on pakko kutsua aina, kun poistutaan sovelluksesta
   super.onDestroy();
-  //must be checked because or else crash when return from landscape mode
+  
+  //Tämä tarkistus on pakko tehdä, koska muuten sovellus voi kaatua käytettäessä maisema-asentoa
   if (backgroundMusic!=null) { 
-    //release the player
+    
+    //Vapautetaan soitin
     backgroundMusic.release(); 
   }
 }
@@ -108,6 +111,7 @@ void mousePressed() {
   
   //Lopetusruutu
   if (this.finished) {
+    
     //Aloittaa alusta, jos peli on loppu ja kosketus osuu oikeaan paikkaan
     if (mouseX > 410 && mouseX < 625 && mouseY > 510 && mouseY < 550) {
       backgroundMusic.seekTo(0);

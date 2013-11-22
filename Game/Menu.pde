@@ -1,3 +1,4 @@
+//Tämä luokka piirtää pelin tilanteen ruudun yläreunaan
 class Menu {
   PImage heart_image;
   PFont font;
@@ -16,6 +17,7 @@ class Menu {
     this.image_width = 30;
   }
   
+  //Piirtää jäljellä olevien elämien verran sydämiä ja pelaajan pisteet
   void draw() {
     int i = 0;
     int hearts = this.gameEngine.getLives();

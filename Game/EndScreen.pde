@@ -1,3 +1,4 @@
+//Tämä luokka piirtää loppuruudun ja pelaajan pisteet
 class EndScreen {
   PImage endscreen_image;
   GameEngine gameEngine;

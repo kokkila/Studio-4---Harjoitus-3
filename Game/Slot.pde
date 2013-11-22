@@ -1,3 +1,4 @@
+//Olennot luodaan omiin slotteihin. Slotit voivat olla myös tyhjillään
 class Slot {
   int x,y;
   PImage slotImage;

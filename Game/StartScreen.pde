@@ -1,3 +1,4 @@
+//Tämä luokka piirtää aloitusnäytön
 class StartScreen {
    PImage startscreen_image;
    Game game;
