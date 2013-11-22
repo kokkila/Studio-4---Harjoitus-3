@@ -1,19 +1,26 @@
+
+//GameEngine-luokan tehtävä on pyörittää peliä
 class GameEngine {
   int runningTime;
-  int windowSizeX, windowSizeY;
+  //int windowSizeX, windowSizeY;
   int points, lives;
   boolean started, finished;
-  SnowBall snowball;
   Game game;
   Santa santa;
+  
+  //Eri kuvat takana ja edessä oleville vihollisille
   PImage[] frontCreatureImages = { 
     loadImage("creature_bunny_100.png"), loadImage("creature_chick_100.png"), loadImage("creature_ghost_100.png"), loadImage("creature_reindeer_100.png"), loadImage("creature_snowman_100.png"), loadImage("creature_witch_100.png")
   };
   PImage[] backCreatureImages = { 
     loadImage("creature_bunny.png"), loadImage("creature_chick.png"), loadImage("creature_ghost.png"), loadImage("creature_reindeer.png"), loadImage("creature_snowman.png"), loadImage("creature_witch.png")
   };
+  
+  //Pukin ja otusten heittämät pallot eroteltu, jotta pukki ei voisi heittää itseään
   ArrayList<SnowBall> santaSnowBalls;
   ArrayList<SnowBall> creatureSnowBalls;
+  
+  //Lista, joka pitää kirjaa poistettavista lumipalloista.
   ArrayList<SnowBall> snowBallsToRemove;
   HashMap<Slot, Creature> creaturesMap;
   GUI gui;
@@ -32,6 +39,7 @@ class GameEngine {
     this.gui = new GUI(this);
   }
 
+  //Metodi
   void initializeSlots() {
     creaturesMap.put(new Slot(60, 400, true), null);
     creaturesMap.put(new Slot(250, 400, true), null);
@@ -50,7 +58,6 @@ class GameEngine {
     generateSnowBalls(runningTime);
     santa.updateCord(runningTime);
     removeSnowBalls();
-    //println(santaSnowBalls);
     gui.display();
     if (this.lives<=0) {
       this.game.finished = true;
@@ -80,6 +87,8 @@ class GameEngine {
     }
   }
 
+  //Luo uusia olioita vapaisiin paikkoihin
+  //Olioiden luomisnopeus ja muut ominaisuudet muuttuvat ajan myötä, jotta peli vaikeutuisi koko ajan
   public void generateCreatures(int runningTime) {
 
     double tmpTime = 1/Math.pow(runningTime+2000, 0.0003);
@@ -98,8 +107,9 @@ class GameEngine {
     }
   }
 
+  //Pistää oliot heittämään lumipalloja pukkia päin
   public void generateSnowBalls(int runningTime) {
-    double tmpTime = 1/Math.pow(runningTime, 0.0008);
+    double tmpTime = 1/Math.pow(runningTime, 0.001);
     for (Object value : creaturesMap.values()) {
       if (value != null) {
         Creature creature = (Creature)value;
@@ -111,6 +121,7 @@ class GameEngine {
     }
   }
 
+  //Palauttaa satunnaisen oliokuvan
   public PImage randomCreatureImage(boolean frontOrBack) {
     int rand = (int)(6*Math.random());
     if (frontOrBack) {
@@ -118,6 +129,7 @@ class GameEngine {
     }
     return backCreatureImages[rand];
   }
+  
   public void setStarted(Boolean started) {
     this.started = started;
   }
@@ -158,6 +170,7 @@ class GameEngine {
     snowBallsToRemove.add(sB);
   }
 
+  //Poistaa pelistä pallot, jotka ovat jo osuneet tai karanneet liian kauaksi ja tyhjentää listan
   public void removeSnowBalls() {
     for (SnowBall sb : snowBallsToRemove) {
       santaSnowBalls.remove(sb);

@@ -14,6 +14,8 @@ class GUI {
     this.santaSnow = loadImage("snow_3.png");
   }
   public void display() {
+    
+    //Maisemakuvat ja vastustajat piirretään kulmakoordinaattien mukaan, pukki ja lumipallot keskikoordinaattien
     imageMode(CORNER);
     image(backgroundImage, 0, 0);
     for (Creature c : gameEngine.creaturesMap.values()) {
