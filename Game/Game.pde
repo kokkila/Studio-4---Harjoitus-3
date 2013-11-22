@@ -7,7 +7,6 @@ int maxLives;
 int start_x1, start_x2, start_y1, start_y2;
 int instructions_x1, instructions_x2, instructions_y1, instructions_y2;
 boolean started, finished, instructions;
-boolean firstStart = true;
 GameEngine gameEngine;
 GUI gui;
 StartScreen startScreen;
