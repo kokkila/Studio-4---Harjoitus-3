@@ -1,5 +1,4 @@
 import java.lang.Math;
-PImage snowBallPic;
 PFont font;
 int runningTime;
 int windowSizeX, windowSizeY;
@@ -7,15 +6,6 @@ int points, lives;
 int start_x1, start_x2, start_y1, start_y2;
 int instructions_x1, instructions_x2, instructions_y1, instructions_y2;
 boolean started, finished, instructions;
-SnowBall snowball;
-Santa santa;
-ArrayList<SnowBall> snowBalls;
-ArrayList<Creature> creatures; // Tää varmaan voisi olla sanakirja, tyyliin slot->creature(t)
-//HashMap<Slot, Creature> creaturesMap; // EN tiedä yhtään toimiiko tää
-/* Iterointi onnistuu näin
-for (Object value : map.values()) {
-    // ...
-}*/
 GameEngine gameEngine;
 GUI gui;
 StartScreen startScreen;
@@ -42,8 +32,6 @@ void setup() {
   this.font = loadFont("Noteworthy-Bold-32.vlw");
   orientation(LANDSCAPE);
   this.gameEngine = new GameEngine(this.lives, this);
-  //snowBallPic = loadImage("snowball.png");
-  //snowball = new SnowBall(100, 600, 50, 0.001);
   this.startScreen = new StartScreen(this);
   this.endScreen = new EndScreen(this.gameEngine, this.font);
   this.instructionScreen = new InstructionScreen(this);
@@ -51,43 +39,44 @@ void setup() {
 }
 
 
-void draw(){
-  if(this.finished){
+void draw() {
+  if (this.finished) {
     imageMode(CORNER);
     this.endScreen.draw();
   }
   else if (this.started) {
     background(0);
     this.runningTime = millis();
-    if(!mousePressed){
+    if (!mousePressed) {
       gameEngine.santa.moveAutom(this.runningTime);
       gameEngine.santa.moving = false;
     }
     gameEngine.updateGame(runningTime);
-    //Gui.draw()
     this.menu.draw();
-  } else if (this.instructions) {
+  } 
+  else if (this.instructions) {
     this.instructionScreen.draw();
-  } else {
+  } 
+  else {
     this.startScreen.draw();
   }
 }
 
-  
-  
 
-void mousePressed(){
+
+
+void mousePressed() {
   if (this.finished) {
     if (mouseX > 410 && mouseX < 625 && mouseY > 457 && mouseY < 490) {
       setup();
     }
   }
   if (this.started) {
-    if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x - (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x + (gameEngine.santa.width/2) < mouseX){ 
-      if(gameEngine.santa.visible){
-      SnowBall sb = new SnowBall(gameEngine.santa.x+50, gameEngine.santa.y-110, gameEngine);
-      sb.throwBallto(mouseX, mouseY, runningTime);
-      gameEngine.addSantaSnowBalls(sb);
+    if (mouseY < gameEngine.santa.y - gameEngine.santa.height/2 || gameEngine.santa.x - (gameEngine.santa.width/2) > mouseX || gameEngine.santa.x + (gameEngine.santa.width/2) < mouseX) { 
+      if (gameEngine.santa.visible) {
+        SnowBall sb = new SnowBall(gameEngine.santa.x+50, gameEngine.santa.y-110, gameEngine);
+        sb.throwBallto(mouseX, mouseY, runningTime);
+        gameEngine.addSantaSnowBalls(sb);
       }
     }
   } 
@@ -104,51 +93,13 @@ void mousePressed(){
   }
 }
 
-void mouseDragged(){
-  if(mouseY > gameEngine.santa.y - gameEngine.santa.height/1.5 && mouseX < gameEngine.santa.x + gameEngine.santa.width*(1.2) && mouseX > gameEngine.santa.x - gameEngine.santa.width*0.8){
+void mouseDragged() {
+  if (mouseY > gameEngine.santa.y - gameEngine.santa.height/1.5 && mouseX < gameEngine.santa.x + gameEngine.santa.width*(1.2) && mouseX > gameEngine.santa.x - gameEngine.santa.width*0.8) {
     gameEngine.santa.updateCord(millis());
   }
-  
-  /*if(mouseY > 500 && mouseY <= 550 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && !gameEngine.santa.moving){
-    gameEngine.santa.moving = false;
-    println("Down0");
-    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
-  }
-  else if(mouseY > 550 && mouseY <= 600 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && !gameEngine.santa.moving){
-    //gameEngine.santa.visible = false;
-    gameEngine.santa.moving = true;
-    println("Down1");
-    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
-  }
-  else if(mouseY > 600 && mouseY <= 650 && mouseX < 220 && mouseX > 180 && gameEngine.santa.visible && gameEngine.santa.moving){
-    gameEngine.santa.visible = false;
-    gameEngine.santa.moving = false;
-    println("Down2");
-    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
-  }
-  else if(mouseY >= 600 && mouseY < 650 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && !gameEngine.santa.moving){
-    //gameEngine.santa.moving = true;
-    println("Up0");
-    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
-  }
-  else if(mouseY > 550 && mouseY <= 600 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && !gameEngine.santa.moving){
-    //gameEngine.santa.visible = true;
-    gameEngine.santa.moving = true;
-    println("Up1");
-    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
-  }
-  else if(mouseY > 500 && mouseY <= 550 && mouseX < 220 && mouseX > 180 && !gameEngine.santa.visible && gameEngine.santa.moving){
-    gameEngine.santa.visible = true;
-    gameEngine.santa.moving = false;
-    println("Up2");
-    //println("MouseX: " + mouseX + "\nMouseY: " + mouseY);
-  }
-  else if (mouseX < 170 || mouseX > 230){
-    println("Ohi");
-    gameEngine.santa.moving = false;
-  }*/
 }
 
 int getLives() {
   return this.lives;
 }
+
