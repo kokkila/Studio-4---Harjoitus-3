@@ -15,7 +15,6 @@ class Creature {
     this.timeCreated = timeCreated;
     this.throwedBalls = 0;
     this.maxThrows = maxThrows;
-    println("MaxThrows: " + maxThrows);
     this.isHit = false;
     this.slot = slot;
     this.gameEngine = gameEngine;

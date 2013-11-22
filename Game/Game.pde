@@ -44,22 +44,22 @@ void setup() {
   this.menu = new Menu(this.gameEngine, this.font);
   setupAudio();
   if (this.firstStart) {
-    
-  /*minim = new Minim(this);
-  player = minim.loadFile("carolbells.mp3", 2048);
-  player.loop();*/
-  this.firstStart = false;
+
+    /*minim = new Minim(this);
+     player = minim.loadFile("carolbells.mp3", 2048);
+     player.loop();*/
+    this.firstStart = false;
   }
 }
 
-public void setupAudio(){
-  
+public void setupAudio() {
+
   backgroundMusic = new APMediaPlayer(this);
   backgroundMusic.setMediaFile("carolbells.mp3");
   backgroundMusic.start();
   backgroundMusic.setLooping(true);
   backgroundMusic.setVolume(1.0, 1.0);
-  
+
   splatSound = new APMediaPlayer(this);
   splatSound.setMediaFile("147541__benboncan__splat-ish.wav");
   splatSound.setVolume(1.0, 1.0);
@@ -88,11 +88,12 @@ void draw() {
   }
 }
 
-/*void stop() {
-  player.close();
-  minim.stop();
-  super.stop();
-} */ 
+public void onDestroy() {
+  super.onDestroy(); //call onDestroy on super class
+  if (backgroundMusic!=null) { //must be checked because or else crash when return from landscape mode
+    backgroundMusic.release(); //release the player
+  }
+}
 
 void mousePressed() {
   if (this.finished) {

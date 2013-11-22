@@ -39,7 +39,9 @@ class SnowBall {
   }
 
   void display(int currentTime, boolean santaBall) {
+    //println("BP: " + this.ballPic + ", BS: " + this.ballSplash);
     if (this.ballPic == this.ballSplash) {
+      //println("BALLSPLASH");
       if (currentTime-destroyTime > 50 || !santaBall) {
         this.gameEngine.setSnowBallToBeRemoved(this);
       }
@@ -63,8 +65,10 @@ class SnowBall {
       //println("uusi koko: " + (Math.round(this.sizeSpeed*this.y) + this.topSize));
       this.setSize(Math.round((this.y-this.horizon)*this.sizeSpeed));      
       //println("Pallo liikkuu: " + timePassed + "\nX: " + x + " Y: " + y);
-      if (this.y<this.horizon || (timePassed/this.distance)>1) {
+      //ATRO: Ilmeisesti äänteen lisääminen hidasti peliä niin paljon tjtn, että ohjelma luuli, että osumat ei ehtineetkään osua ja poisti pallot turhaan pelistä
+      if (this.y<this.horizon || (timePassed/this.distance)>1.5) {
 
+          //println("EIKAIVAAN");
            this.gameEngine.setSnowBallToBeRemoved(this);
        
                 destroyBall();
@@ -100,6 +104,7 @@ class SnowBall {
 
       //Atro: Oli pakko tyyppimuuntaa, noi voi vaihtaa myöhemmin takaisin floateiksi
       if (c.checkHit(this.x, this.y) && !pointsTaken) {
+        //println("HIT");
         this.gameEngine.removeCreatures(c.slot);
         this.gameEngine.addPoints(10);
         this.destroyBall();
@@ -120,7 +125,7 @@ class SnowBall {
       if (santa.visible && this.orgY<santa.upY-110 && !pointsTaken) {
         this.gameEngine.substractLives(1);
         this.pointsTaken = true;
-        destroyBall();
+        this.destroyBall();
         this.gameEngine.game.splatSound.start();
       }
     }
@@ -132,6 +137,7 @@ class SnowBall {
     this.Dx = 0;
     this.Dy = 0;
     this.ballPic = this.ballSplash;
+    //println("Changed");
   }
 
   int getX() {
