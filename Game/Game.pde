@@ -1,4 +1,3 @@
-//import ddf.minim.*;
 import apwidgets.*;
 import java.lang.Math;
 PFont font;
@@ -8,7 +7,6 @@ int points, lives;
 int start_x1, start_x2, start_y1, start_y2;
 int instructions_x1, instructions_x2, instructions_y1, instructions_y2;
 boolean started, finished, instructions;
-boolean firstStart = true;
 GameEngine gameEngine;
 GUI gui;
 StartScreen startScreen;
@@ -17,7 +15,6 @@ InstructionScreen instructionScreen;
 Menu menu;
 APMediaPlayer backgroundMusic;
 APMediaPlayer splatSound;
-//Minim minim;
 
 void setup() {
   this.lives = 5;
@@ -43,13 +40,6 @@ void setup() {
   this.instructionScreen = new InstructionScreen(this);
   this.menu = new Menu(this.gameEngine, this.font);
   setupAudio();
-  if (this.firstStart) {
-
-    /*minim = new Minim(this);
-     player = minim.loadFile("carolbells.mp3", 2048);
-     player.loop();*/
-    this.firstStart = false;
-  }
 }
 
 public void setupAudio() {
